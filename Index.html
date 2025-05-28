@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DNST Exam Prep</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f3;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #2e7d32; /* deep green */
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+    }
+    nav {
+      display: flex;
+      background: #fbc02d; /* yellow */
+      justify-content: center;
+    }
+    nav button {
+      background: none;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: bold;
+      color: #2e7d32;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav button.active {
+      border-bottom: 3px solid #2e7d32;
+    }
+    main {
+      padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .mode-buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .mode-buttons button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .mode-buttons button:hover {
+      background: #1b4d20;
+    }
+    /* WhatsApp button */
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+    #whatsapp-btn:hover {
+      background: #128c4a;
+    }
+    #whatsapp-btn svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>DNST Exam Prep</header>
+
+  <nav>
+    <button id="tab-delsu" class="active">Delsu</button>
+    <button id="tab-uniben">Uniben</button>
+    <button id="tab-nursing">School of Nursing</button>
+  </nav>
+
+  <main>
+    <section id="content-delsu" class="tab-content">
+      <h2>Delsu Practice & Exam Modes</h2>
+      <div class="mode-buttons">
+        <button onclick="alert('Delsu Practice Mode coming soon!')">Practice Mode</button>
+        <button onclick="alert('Delsu Exam Mode coming soon!')">Exam Mode</button>
+      </div>
+    </section>
+
+    <section id="content-uniben" class="tab-content" style="display:none;">
+      <h2>Uniben Practice & Exam Modes</h2>
+      <div class="mode-buttons">
+        <button onclick="alert('Uniben Practice Mode coming soon!')">Practice Mode</button>
+        <button onclick="alert('Uniben Exam Mode coming soon!')">Exam Mode</button>
+      </div>
+    </section>
+
+    <section id="content-nursing" class="tab-content" style="display:none;">
+      <h2>School of Nursing Practice & Exam Modes</h2>
+      <div class="mode-buttons">
+        <button onclick="alert('School of Nursing Practice Mode coming soon!')">Practice Mode</button>
+        <button onclick="alert('School of Nursing Exam Mode coming soon!')">Exam Mode</button>
+      </div>
+    </section>
+  </main>
+
+  <a href="https://wa.me/2349156478004" target="_blank" id="whatsapp-btn" title="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.52 3.48a11.93 11.93 0 0 0-16.9 0 11.88 11.88 0 0 0-3.44 8.36 11.85 11.85 0 0 0 1.98 6.31l-1.5 5.46 5.6-1.46a11.85 11.85 0 0 0 6.1 1.52h.02a11.9 11.9 0 0 0 8.35-3.45 11.93 11.93 0 0 0 0-16.9zm-7.6 15.65c-1.72 0-3.44-.52-4.9-1.5l-.35-.21-3.32.87.9-3.25-.23-.35a7.24 7.24 0 0 1-1.14-4.17 7.33 7.33 0 0 1 12.62-5.12 7.25 7.25 0 0 1-5.68 12.37zm3.2-4.9c-.17-.09-1-.5-1.15-.55-.15-.05-.27-.08-.38.09-.12.16-.46.55-.56.66-.1.1-.2.11-.37.04-.17-.07-.7-.26-1.33-.82-.49-.44-.82-.99-.92-1.16-.1-.16-.01-.24.07-.33.07-.07.17-.18.26-.27.09-.09.12-.16.18-.27.06-.11.03-.21-.01-.3-.05-.1-.38-.91-.52-1.25-.14-.32-.28-.27-.38-.27-.1 0-.21 0-.32 0-.11 0-.28.11-.43.26-.15.15-.58.57-.58 1.4 0 .83.59 1.63.67 1.74.08.1 1.16 1.8 2.8 2.53.39.17.69.27.93.35.39.13.74.11 1.02.07.31-.05 1-.4 1.14-.79.14-.38.14-.71.1-.79-.05-.08-.15-.13-.32-.22z"/>
+    </svg>
+  </a>
+
+  <script>
+    const tabs = document.querySelectorAll('nav button');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Hide all content
+        contents.forEach(c => c.style.display = 'none');
+
+        // Activate clicked tab & show content
+        tab.classList.add('active');
+        contents[idx].style.display = 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>

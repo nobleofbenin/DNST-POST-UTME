@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNIBEN Practice Mode</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4caf50 0%, #f9f871 100%);
+      color: #1b3a00;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    #question-container {
+      background: white;
+      border-radius: 15px;
+      padding: 25px 30px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    #question {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .option-btn {
+      display: block;
+      background: #f9f871;
+      color: #1b3a00;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 10px 0;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      text-align: left;
+      font-weight: 600;
+      box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+    }
+
+    .option-btn:hover {
+      background: #e1d84f;
+    }
+
+    .option-btn.correct {
+      background-color: #4caf50;
+      color: white;
+      cursor: default;
+    }
+
+    .option-btn.incorrect {
+      background-color: #f44336;
+      color: white;
+      cursor: default;
+    }
+
+    #next-btn {
+      margin-top: 25px;
+      padding: 15px 30px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    #next-btn:disabled {
+      background-color: #a5d6a7;
+      cursor: default;
+    }
+
+    #explanation {
+      margin-top: 20px;
+      font-size: 1rem;
+      font-style: italic;
+      color: #333;
+      min-height: 40px;
+    }
+
+    .back-link {
+      margin-top: 40px;
+      font-size: 1rem;
+      color: white;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>UNIBEN Practice Mode</h1>
+
+  <div id="question-container">
+    <div id="question">Question text here</div>
+    <div id="options-container"></div>
+    <div id="explanation"></div>
+    <button id="next-btn" disabled>Next Question</button>
+  </div>
+
+  <div class="back-link" onclick="location.href='uniben.html'">← Back to Modes</div>
+
+  <script>
+    const unibenQuestions = [
+      // Example question, replace/add your own
+      {
+        question: "Which organ is responsible for pumping blood?",
+        options: ["Liver", "Heart", "Lung", "Kidney"],
+        answer: "Heart",
+        explanation: "The heart pumps blood throughout the body."
+      },
+      {
+        question: "Water boils at what temperature (in Celsius)?",
+        options: ["90°C", "80°C", "100°C", "120°C"],
+        answer: "100°C",
+        explanation: "Water boils at 100 degrees Celsius at standard pressure."
+      }
+      // Add more questions here
+    ];
+
+    let currentQuestionIndex = 0;
+
+    const questionEl = document.getElementById("question");
+    const optionsContainer = document.getElementById("options-container");
+    const explanationEl = document.getElementById("explanation");
+    const nextBtn = document.getElementById("next-btn");
+
+    function loadQuestion() {
+      explanationEl.textContent = "";
+      nextBtn.disabled = true;
+
+      const currentQ = unibenQuestions[currentQuestionIndex];
+      questionEl.textContent = currentQ.question;
+
+      optionsContainer.innerHTML = "";
+      currentQ.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.classList.add("option-btn");
+        button.addEventListener("click", () => selectOption(button, currentQ));
+        optionsContainer.appendChild(button);
+      });
+    }
+
+    function selectOption(selectedBtn, question) {
+      const buttons = optionsContainer.querySelectorAll("button");
+      buttons.forEach(btn => btn.disabled = true);
+
+      if (selectedBtn.textContent === question.answer) {
+        selectedBtn.classList.add("correct");
+      } else {
+        selectedBtn.classList.add("incorrect");
+        // highlight correct answer
+        buttons.forEach(btn => {
+          if (btn.textContent === question.answer) btn.classList.add("correct");
+        });
+      }
+
+      explanationEl.textContent = question.explanation;
+      nextBtn.disabled = false;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex >= unibenQuestions.length) {
+        alert("You have completed all questions!");
+        currentQuestionIndex = 0; // reset to start
+      }
+      loadQuestion();
+    });
+
+    // Initialize first question
+    loadQuestion();
+  </script>
+</body>
+</html>

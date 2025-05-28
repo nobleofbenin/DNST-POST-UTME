@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DNST Exam Prep</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: #f9f9f9;
+    color: #333;
+  }
+  header {
+    background: #2a7f4d; /* deep green */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+  }
+  nav {
+    background: #f9c846; /* yellow */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 0.7rem 0;
+  }
+  nav button {
+    background: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #2a7f4d;
+    transition: background 0.3s ease;
+  }
+  nav button:hover, nav button.active {
+    background: #2a7f4d;
+    color: white;
+  }
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  .mode-buttons {
+    margin-bottom: 1.5rem;
+  }
+  .mode-buttons button {
+    margin-right: 1rem;
+    background: #f9c846;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #2a7f4d;
+    transition: background 0.3s ease;
+  }
+  .mode-buttons button:hover, .mode-buttons button.active {
+    background: #2a7f4d;
+    color: white;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background: #2a7f4d;
+    color: white;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+  }
+  /* WhatsApp floating button */
+  #whatsapp-button {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #25d366;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 1000;
+  }
+  #whatsapp-button img {
+    width: 36px;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>DNST Exam Prep</h1>
+</header>
+
+<nav>
+  <button class="nav-btn active" data-target="delsu">Delsu</button>
+  <button class="nav-btn" data-target="uniben">Uniben</button>
+  <button class="nav-btn" data-target="nursing">School of Nursing</button>
+</nav>
+
+<main>
+  <!-- DELSU PAGE -->
+  <section id="delsu" class="page active">
+    <div class="mode-buttons">
+      <button class="mode-btn active" data-mode="practice">Practice Mode</button>
+      <button class="mode-btn" data-mode="exam">Exam Mode</button>
+    </div>
+    <div id="delsu-content">
+      <p>Welcome to Delsu Practice Mode! (Questions will appear here.)</p>
+    </div>
+  </section>
+
+  <!-- UNIBEN PAGE -->
+  <section id="uniben" class="page">
+    <div class="mode-buttons">
+      <button class="mode-btn active" data-mode="practice">Practice Mode</button>
+      <button class="mode-btn" data-mode="exam">Exam Mode</button>
+    </div>
+    <div id="uniben-content">
+      <p>Welcome to Uniben Practice Mode! (Questions will appear here.)</p>
+    </div>
+  </section>
+
+  <!-- SCHOOL OF NURSING PAGE -->
+  <section id="nursing" class="page">
+    <div class="mode-buttons">
+      <button class="mode-btn active" data-mode="practice">Practice Mode</button>
+      <button class="mode-btn" data-mode="exam">Exam Mode</button>
+    </div>
+    <div id="nursing-content">
+      <p>Welcome to School of Nursing Practice Mode! (Questions will appear here.)</p>
+    </div>
+  </section>
+</main>
+
+<!-- WhatsApp Button -->
+<a id="whatsapp-button" href="https://wa.me/2349156478004" target="_blank" title="Chat with us on WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+</a>
+
+<script>
+  // Navigation switching
+  const navButtons = document.querySelectorAll('nav .nav-btn');
+  const pages = document.querySelectorAll('main .page');
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const target = btn.getAttribute('data-target');
+      pages.forEach(p => {
+        if(p.id === target){
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+    });
+  });
+
+  // Mode buttons switching
+  const modeButtonsGroups = document.querySelectorAll('.mode-buttons');
+
+  modeButtonsGroups.forEach(group => {
+    const buttons = group.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        // You can add code here to switch question sets or modes per page.
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

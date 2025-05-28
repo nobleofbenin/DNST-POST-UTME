@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNIBEN Exam Mode</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4caf50 0%, #f9f871 100%);
+      color: #1b3a00;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    #timer {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #1b3a00;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    #question-container {
+      background: white;
+      border-radius: 15px;
+      padding: 25px 30px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    #question {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .option-label {
+      display: block;
+      background: #f9f871;
+      color: #1b3a00;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 10px 0;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      font-weight: 600;
+      box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+    }
+
+    .option-label:hover {
+      background: #e1d84f;
+    }
+
+    #navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      max-width: 700px;
+      width: 100%;
+      margin-bottom: 25px;
+    }
+
+    button.nav-btn {
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    button.nav-btn:disabled {
+      background-color: #a5d6a7;
+      cursor: default;
+    }
+
+    #result {
+      max-width: 700px;
+      background: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1b3a00;
+      text-align: center;
+      display: none;
+    }
+
+    .back-link {
+      font-size: 1rem;
+      color: white;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>UNIBEN Exam Mode</h1>
+  <div id="timer">Time Remaining: 10:00</div>
+
+  <div id="question-container">
+    <div id="question">Question text here</div>
+    <form id="options-form">
+      <!-- Radio buttons inserted here -->
+    </form>
+  </div>
+
+  <div id="navigation-buttons">
+    <button id="prev-btn" class="nav-btn" disabled>Previous</button>
+    <button id="next-btn" class="nav-btn">Next</button>
+  </div>
+
+  <button id="submit-btn" class="nav-btn" style="display:none; width: 100%; max-width:700px;">Submit Exam</button>
+
+  <div id="result"></div>
+
+  <div class="back-link" onclick="location.href='uniben.html'">← Back to Modes</div>
+
+  <script>
+    const unibenQuestions = [
+      {
+        question: "Which organ is responsible for pumping blood?",
+        options: ["Liver", "Heart", "Lung", "Kidney"],
+        answer: "Heart",
+      },
+      {
+        question: "Water boils at what temperature (in Celsius)?",
+        options: ["90°C", "80°C", "100°C", "120°C"],
+        answer: "100°C",
+      }
+      // Add your questions here
+    ];
+
+    let currentQuestionIndex = 0;
+    const userAnswers = new Array(unibenQuestions.length).fill(null);
+    let timerInterval;
+    let timeRemaining = 10 * 60; // 10 minutes in seconds
+
+    const questionEl = document.getElementById('question');
+    const optionsForm = document.getElementById('options-form');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const resultDiv = document.getElementById('result');
+    const timerEl = document.getElementById('timer');
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (timeRemaining <= 0) {
+          clearInterval(timerInterval);
+          submitExam();
+          return;
+        }
+        timeRemaining--;
+        let minutes = Math.floor(timeRemaining / 60);
+        let seconds = timeRemaining % 60;
+        timerEl.textContent = `Time Remaining: ${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+      }, 1000);
+    }
+
+    function loadQuestion() {
+      const q = unibenQuestions[currentQuestionIndex];
+      questionEl.textContent = `Q${currentQuestionIndex + 1}. ${q.question}`;
+      optionsForm.innerHTML = '';
+
+      q.options.forEach((option, idx) => {
+        const optionId = `option${idx}`;
+        const isChecked = userAnswers[currentQuestionIndex] === option ? 'checked' : '';
+        optionsForm.innerHTML += `
+          <label class="option-label" for="${optionId}">
+            <input type="radio" id="${optionId}" name="option" value="${option}" ${isChecked} required />
+            ${option}
+          </label>
+        `;
+      });
+
+      prevBtn.disabled = currentQuestionIndex === 0;
+      nextBtn.disabled = currentQuestionIndex === unibenQuestions.length - 1;
+      submitBtn.style.display = currentQuestionIndex === unibenQuestions.length - 1 ? 'block' : 'none';
+      resultDiv.style.display = 'none';
+    }
+
+    function saveAnswer() {
+      const selectedOption = optionsForm.option.value;
+      if (selectedOption) {
+        userAnswers[currentQuestionIndex] = selectedOption;
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      saveAnswer();
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      saveAnswer();
+      if (currentQuestionIndex < unibenQuestions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+      }
+    });
+
+    submitBtn.addEventListener('click', () => {
+      saveAnswer();
+      if (userAnswers.includes(null)) {
+        alert("You have unanswered questions. Please answer all before submitting.");
+        return;
+      }
+      clearInterval(timerInterval);
+      submitExam();
+    });
+
+    function submitExam() {
+      let score = 0;
+      unibenQuestions.forEach((q, i) => {
+        if (userAnswers[i] === q.answer) score++;
+      });
+
+      const percentage = ((score / unibenQuestions.length) * 100).toFixed(2);
+
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = `You scored ${score} out of ${unibenQuestions.length} (${percentage}%)`;
+      questionEl.style.display = 'none';
+      optionsForm.style.display = 'none';
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      submitBtn.style.display = 'none';
+      timerEl.style.display = 'none';
+    }
+
+    // Initialize
+    loadQuestion();
+    startTimer();
+  </script>
+</body>
+</html>

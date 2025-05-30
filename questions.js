@@ -1,15 +1,15 @@
 const questions = [
   {
     question: "What is the capital of Nigeria?",
-    options: ["Abuja", "Lagos", "Kano", "Port Harcourt"],
+    options: ["Lagos", "Abuja", "Port Harcourt", "Kano"],
     answer: "Abuja",
-    explanation: "Abuja is the official capital of Nigeria."
+    explanation: "Abuja is the official capital city of Nigeria."
   },
   {
-    question: "What is H2O commonly known as?",
-    options: ["Hydrogen", "Oxygen", "Water", "Ice"],
-    answer: "Water",
-    explanation: "H2O is the chemical formula for water."
-  },
-  // Add more questions...
+    question: "Which organ pumps blood throughout the body?",
+    options: ["Lungs", "Heart", "Liver", "Kidney"],
+    answer: "Heart",
+    explanation: "The heart is responsible for pumping blood in the circulatory system."
+  }
+  // Add more questions as needed
 ];

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DNST Post UTME Prep</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #34C759;
+      color: white;
+      padding: 25px 15px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+    .mode-buttons {
+      margin: 30px 0;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      background-color: #F7DC6F;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      min-width: 160px;
+    }
+    button:hover {
+      background-color: #e6ca56;
+    }
+    #app, #result {
+      max-width: 700px;
+      width: 90%;
+      margin-bottom: 50px;
+      display: none;
+      background: #f9f9f9;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    #q-number {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #34C759;
+    }
+    #question-box {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+    .option {
+      background-color: white;
+      border: 2px solid #ccc;
+      padding: 15px 20px;
+      margin: 10px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .option:hover {
+      border-color: #34C759;
+      background-color: #e6f9e8;
+    }
+    .option.correct {
+      border-color: #34C759;
+      background-color: #d4f5d7;
+      font-weight: bold;
+      cursor: default;
+    }
+    .option.incorrect {
+      border-color: #f44336;
+      background-color: #f9d6d5;
+      font-weight: bold;
+      cursor: default;
+    }
+    #explanation-box {
+      margin-top: 15px;
+      background: #fffbe6;
+      padding: 15px;
+      border-left: 5px solid #F7DC6F;
+      font-style: italic;
+      display: none;
+    }
+    #next-btn {
+      margin-top: 20px;
+      background-color: #34C759;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: background-color 0.3s ease;
+    }
+    #next-btn:hover {
+      background-color: #2ea64a;
+    }
+    #timer {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #f39c12;
+      margin-bottom: 15px;
+      text-align: center;
+      letter-spacing: 1.2px;
+    }
+    #score {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #34C759;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    pre {
+      background: #fffbe6;
+      padding: 15px;
+      border-radius: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: 'Courier New', Courier, monospace;
+      margin-top: 20px;
+    }
+    footer {
+      width: 100%;
+      padding: 15px 0;
+      background: #34C759;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      user-select: none;
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+    }
+    footer img {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+    }
+    @media (max-width: 480px) {
+      button {
+        width: 100%;
+      }
+      #app, #result {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>DNST Premium Class Post UTME Prep</h1>
+  <p>Get ready to ace your Post UTME with DNST Premium Class! 🎉👍<br />
+     Practice with confidence and precision. Our platform is designed to help you prepare for the best. Let's get started! 💪
+  </p>
+</header>
+
+<div class="mode-buttons">
+  <button id="practice-btn" aria-label="Start Practice Mode">Practice Mode</button>
+  <button id="exam-btn" aria-label="Start Exam Mode">Exam Mode</button>
+</div>
+
+<div id="app" role="main" aria-live="polite">
+  <div id="timer" aria-live="off"></div>
+  <div id="q-number"></div>
+  <div id="question-box"></div>
+  <div id="options" role="list"></div>
+  <div id="explanation-box" tabindex="0"></div>
+  <button id="next-btn" aria-label="Next Question">Next</button>
+</div>
+
+<div id="result" role="region" aria-live="polite">
+  <div id="score"></div>
+</div>
+
+<footer id="whatsapp-footer" tabindex="0" role="link" aria-label="Join DNST Premium Class on WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp icon" />
+  Join DNST Premium Class! Click here to get started on WhatsApp 📱
+</footer>
+
+<script>
+  const whatsappNumber = '+2349156478004';
+  document.getElementById('whatsapp-footer').addEventListener('click', () => {
+    window.open(`https://wa.me/${whatsappNumber.replace(/\D/g,'')}`, '_blank');
+  });
+  document.getElementById('whatsapp-footer').addEventListener('keypress', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      window.open(`https://wa.me/${whatsappNumber.replace(/\D/g,'')}`, '_blank');
+    }
+  });
+
+  const questions = [
+    {
+      question: "What is the powerhouse of the cell?",
+      options: ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"],
+      answer: 1,
+      explanation: "Mitochondria produce the energy currency (ATP) of the cell."
+    },
+    {
+      question: "Which gas is needed for photosynthesis?",
+      options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+      answer: 1,
+      explanation: "Carbon dioxide is used in the process of photosynthesis to make glucose."
+    },
+    {
+      question: "What is H₂O commonly known as?",
+      options: ["Salt", "Water", "Acid", "Base"],
+      answer: 1,
+      explanation: "H₂O is the chemical formula for water."
+    },
+    {
+      question: "Which organ pumps blood in the human body?",
+      options: ["Liver", "Brain", "Heart", "Lungs"],
+      answer: 2,
+      explanation: "The heart pumps blood throughout the body."
+    },
+    {
+      question: "How many continents are there?",
+      options: ["5", "6", "7", "8"],
+      answer: 2,
+      explanation: "There are 7 continents in the world."
+    },
+    // Add more questions here as needed
+  ];
+
+  let currentMode = null;
+  let currentQuestion = 0;
+  let score = 0;
+  let timerInterval;
+  let selectedQuestions = [];
+
+  const practiceBtn = document.getElementById('practice-btn');
+  const examBtn = document.getElementById('exam-btn');
+  const appDiv = document.getElementById('app');
+  const resultDiv = document.getElementById('result');
+  const questionNumberDiv = document.getElementById('q-number');
+  const questionBox = document.getElementById('question-box');
+  const optionsDiv = document.getElementById('options');
+  const explanationBox = document.getElementById('explanation-box');
+  const nextBtn = document.getElementById('next-btn');
+  const timerDiv = document.getElementById('timer');
+  const scoreDiv = document.getElementById('score');
+
+  practiceBtn.addEventListener('click', () => startMode('practice'));
+  examBtn.addEventListener('click', () => startMode('exam'));
+  nextBtn.addEventListener('click', () => {
+    currentQuestion++;
+    showQuestion();
+  });
+
+  function startMode(mode) {
+    currentMode = mode;
+    practiceBtn.disabled = true;
+    examBtn.disabled = true;
+    explanationBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+    scoreDiv.textContent = '';
+    resultDiv.style.display = 'none';
+    appDiv.style.display = 'block';
+    timerDiv.textContent = '';
+
+    const totalQs = mode === 'practice' ? 

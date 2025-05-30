@@ -79,3 +79,6 @@ function showResult() {
 function joinWhatsApp() {
   window.open("https://wa.me/2349156478004", "_blank");
 }
+document.getElementById('whatsapp-btn').addEventListener('click', () => {
+  window.open("https://wa.me/2349156478004", "_blank");
+});

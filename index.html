@@ -1,102 +1,33 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DNST POST UTME PRACTICE</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      color: #000;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #006400;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    .welcome {
-      padding: 2rem;
-      text-align: center;
-      background: #f5fff5;
-    }
-    .welcome h2 {
-      color: #228B22;
-    }
-    .mode-buttons {
-      text-align: center;
-      margin: 2rem;
-    }
-    .mode-buttons button {
-      padding: 1rem 2rem;
-      margin: 1rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .practice-btn {
-      background-color: #FFD700;
-      color: #000;
-    }
-    .exam-btn {
-      background-color: #32CD32;
-      color: white;
-    }
-    .question-area {
-      max-width: 800px;
-      margin: 1rem auto 5rem;
-      padding: 2rem;
-      display: none;
-    }
-    .whatsapp-icon {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25D366;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 50px;
-      font-size: 16px;
-      text-align: center;
-      text-decoration: none;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 1000;
-    }
-    .timer {
-      font-weight: bold;
-      margin: 1rem 0;
-    }
-    .selected {
-      background-color: #FFEB3B;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <h1>DNST POST UTME PRACTICE</h1>
   </header>
-  <div class="welcome">
-    <h2>Welcome to the DNST Online Tutorial</h2>
-    <p>Prepare smarter and faster with our expertly reviewed Post-UTME questions. Choose your mode and get started now!</p>
-  </div>
-  <div class="mode-buttons">
-    <button class="practice-btn" onclick="startPracticeMode()">Practice Mode</button>
-    <button class="exam-btn" onclick="startExamMode()">Exam Mode</button>
-  </div>
-  <div class="question-area" id="quizContainer"></div>
-  <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank">
-    💬 Join DNST Premium Class - Click Here
-  </a>
 
-  <script src="general.js"></script>
+  <main>
+    <section class="intro">
+      <h2>Welcome to the DNST Online Tutorial</h2>
+      <p>Prepare smarter and faster with our expertly reviewed Post-UTME questions. Choose your mode and get started now!</p>
+    </section>
+
+    <section class="mode-selection">
+      <button onclick="startPractice()">Practice Mode</button>
+      <button onclick="startExam()">Exam Mode</button>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="https://wa.me/234XXXXXXXXXX" target="_blank">Join DNST Premium Class - Click Here</a></p>
+  </footer>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

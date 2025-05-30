@@ -1,99 +1,162 @@
-let currentQuestion = 0;
+import { questions } from './questions.js';
+
+const modeContainer = document.getElementById('mode-selection');
+const quizContainer = document.getElementById('quiz-container');
+const questionText = document.getElementById('question');
+const optionsList = document.getElementById('options');
+const feedbackContainer = document.getElementById('feedback');
+const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById('prev-btn');
+const submitBtn = document.getElementById('submit-btn');
+const timerDisplay = document.getElementById('timer');
+const resultContainer = document.getElementById('result');
+const explanationContainer = document.getElementById('explanations');
+const backBtn = document.getElementById('back-btn');
+
+let currentMode = '';
+let currentQuestionIndex = 0;
+let shuffledQuestions = [];
 let userAnswers = [];
-let mode = "";
-let timerInterval;
+let timer = null;
+let timeLeft = 3600;
 
-function startPracticeMode() {
-  mode = "practice";
-  showQuiz(30);
-}
+function startQuiz(mode) {
+  currentMode = mode;
+  currentQuestionIndex = 0;
+  userAnswers = [];
+  shuffledQuestions = [...questions]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, mode === 'practice' ? 30 : 50);
 
-function startExamMode() {
-  mode = "exam";
-  showQuiz(50);
-  startTimer(60 * 60); // 1 hour
-}
-
-function showQuiz(count) {
-  questions.sort(() => Math.random() - 0.5);
-  questions.length = count;
-  document.querySelector("#quiz").classList.remove("hidden");
-  document.querySelector("#results").classList.add("hidden");
-  showQuestion();
-  if (mode === "exam") {
-    document.getElementById("timer").classList.remove("hidden");
-    document.getElementById("submitBtn").classList.remove("hidden");
+  modeContainer.style.display = 'none';
+  quizContainer.style.display = 'block';
+  resultContainer.style.display = 'none';
+  explanationContainer.innerHTML = '';
+  if (currentMode === 'exam') {
+    startTimer();
   }
+  showQuestion();
+}
+
+function startTimer() {
+  timerDisplay.style.display = 'block';
+  timeLeft = 3600;
+  updateTimerDisplay();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      submitQuiz();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  timerDisplay.textContent = `Time left: ${minutes}m ${seconds}s`;
 }
 
 function showQuestion() {
-  const q = questions[currentQuestion];
-  const container = document.getElementById("question-container");
-  container.innerHTML = `<p>${currentQuestion + 1}. ${q.question}</p>`;
-  q.options.forEach((opt, i) => {
-    container.innerHTML += `<div><input type="radio" name="option" value="${opt}" onchange="submitAnswer('${opt}')"/> ${opt}</div>`;
+  const currentQuestion = shuffledQuestions[currentQuestionIndex];
+  questionText.textContent = `Q${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+  optionsList.innerHTML = '';
+  feedbackContainer.innerHTML = '';
+
+  currentQuestion.options.forEach((option, index) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.textContent = option;
+    btn.addEventListener('click', () => handleAnswer(index));
+    li.appendChild(btn);
+    optionsList.appendChild(li);
   });
-  document.getElementById("feedback").innerHTML = "";
+
+  prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+  nextBtn.style.display = 'none';
+  submitBtn.style.display = currentQuestionIndex === shuffledQuestions.length - 1 && currentMode === 'exam' ? 'inline-block' : 'none';
+  backBtn.style.display = 'inline-block';
 }
 
-function submitAnswer(selected) {
-  userAnswers[currentQuestion] = selected;
-  if (mode === "practice") {
-    const correct = questions[currentQuestion].answer;
-    const explanation = questions[currentQuestion].explanation;
-    const result = selected === correct ? "✅ Correct!" : `❌ Wrong. Correct: ${correct}`;
-    document.getElementById("feedback").innerHTML = `${result}<br>${explanation}`;
+function handleAnswer(selectedIndex) {
+  const currentQuestion = shuffledQuestions[currentQuestionIndex];
+  userAnswers[currentQuestionIndex] = selectedIndex;
+
+  const isCorrect = selectedIndex === currentQuestion.answer;
+  if (currentMode === 'practice') {
+    feedbackContainer.innerHTML = `
+      <p><strong>${isCorrect ? 'Correct!' : 'Incorrect!'}</strong></p>
+      <p>Correct answer: ${currentQuestion.options[currentQuestion.answer]}</p>
+      <p>Explanation: ${currentQuestion.explanation}</p>
+    `;
   }
+
+  nextBtn.style.display = 'inline-block';
 }
 
 function nextQuestion() {
-  if (currentQuestion < questions.length - 1) {
-    currentQuestion++;
+  if (currentQuestionIndex < shuffledQuestions.length - 1) {
+    currentQuestionIndex++;
     showQuestion();
   }
 }
 
 function prevQuestion() {
-  if (currentQuestion > 0) {
-    currentQuestion--;
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
     showQuestion();
   }
 }
 
-function submitExam() {
-  clearInterval(timerInterval);
+function submitQuiz() {
+  if (timer) clearInterval(timer);
+
+  quizContainer.style.display = 'none';
+  resultContainer.style.display = 'block';
+  timerDisplay.style.display = 'none';
+
   let score = 0;
-  let resultHTML = "";
-  questions.forEach((q, i) => {
-    const correct = q.answer;
-    const chosen = userAnswers[i] || "No answer";
-    const isCorrect = chosen === correct;
-    if (isCorrect) score++;
-    resultHTML += `<p><strong>Q${i + 1}:</strong> ${q.question}<br/>
-    Your answer: ${chosen} <br/>
-    Correct answer: ${correct} <br/>
-    Explanation: ${q.explanation}</p><hr/>`;
-  });
-  const percentage = (score / questions.length) * 100;
-  resultHTML = `<h2>Your Score: ${percentage.toFixed(2)}%</h2>` + resultHTML;
-  document.getElementById("results").innerHTML = resultHTML;
-  document.getElementById("results").classList.remove("hidden");
-  document.getElementById("quiz").classList.add("hidden");
-}
+  explanationContainer.innerHTML = '';
 
-function startTimer(seconds) {
-  const timer = document.getElementById("timer");
-  function update() {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    timer.innerText = `Time Left: ${mins}m ${secs}s`;
-    if (seconds <= 0) {
-      clearInterval(timerInterval);
-      submitExam();
+  shuffledQuestions.forEach((q, i) => {
+    const userAnswer = userAnswers[i];
+    if (userAnswer === q.answer) {
+      score++;
     }
-    seconds--;
-  }
-  update();
-  timerInterval = setInterval(update, 1000);
+
+    const explanationHTML = `
+      <div class="explanation-block">
+        <p><strong>Q${i + 1}: ${q.question}</strong></p>
+        <p>Your Answer: ${userAnswer !== undefined ? q.options[userAnswer] : 'No answer'}</p>
+        <p>Correct Answer: ${q.options[q.answer]}</p>
+        <p>Explanation: ${q.explanation}</p>
+        <hr>
+      </div>
+    `;
+    explanationContainer.innerHTML += explanationHTML;
+  });
+
+  const percentage = ((score / shuffledQuestions.length) * 100).toFixed(2);
+  resultContainer.innerHTML = `
+    <h2>Exam Complete!</h2>
+    <p>You scored ${score} out of ${shuffledQuestions.length} (${percentage}%)</p>
+    <h3>Explanations:</h3>
+  `;
 }
 
+function goBackToModeSelection() {
+  quizContainer.style.display = 'none';
+  resultContainer.style.display = 'none';
+  explanationContainer.innerHTML = '';
+  modeContainer.style.display = 'block';
+  if (timer) clearInterval(timer);
+}
+
+// Event listeners
+document.getElementById('practice-btn').addEventListener('click', () => startQuiz('practice'));
+document.getElementById('exam-btn').addEventListener('click', () => startQuiz('exam'));
+nextBtn.addEventListener('click', nextQuestion);
+prevBtn.addEventListener('click', prevQuestion);
+submitBtn.addEventListener('click', submitQuiz);
+backBtn.addEventListener('click', goBackToModeSelection);

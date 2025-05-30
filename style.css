@@ -1,1 +1,99 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  background: #ffffff;
+  color: #333;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #2a8a2a;
+  padding: 10px 20px;
+}
+
+.logo {
+  height: 60px;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background: linear-gradient(to right, #2a8a2a, #f4d600);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 2em;
+}
+
+.cta-button {
+  background: white;
+  color: green;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.features {
+  padding: 30px 20px;
+  background: #f8f8f8;
+}
+
+.features h2 {
+  color: #2a8a2a;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #2a8a2a;
+  color: white;
+}
+
+.quiz-container {
+  padding: 20px;
+  text-align: center;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+#question-container {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+.whatsapp-icon {
+  font-size: 24px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+#feedback {
+  margin-top: 10px;
+  font-weight: bold;
+  color: blue;
+}
 

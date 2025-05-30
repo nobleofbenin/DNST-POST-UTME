@@ -103,4 +103,17 @@ button {
   z-index: 100;
   border-radius: 50%;
 }
+.back-button {
+  background-color: #f0ad4e;
+  color: white;
+  padding: 10px 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.back-button:hover {
+  background-color: #ec971f;
+}
 

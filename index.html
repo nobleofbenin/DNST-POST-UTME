@@ -49,25 +49,9 @@
     }
     .question-area {
       max-width: 800px;
-      margin: 2rem auto;
+      margin: 3rem auto;
       padding: 2rem;
       display: none;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .opt-btn {
-      display: block;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      text-align: left;
-    }
-    .opt-btn.selected {
-      background-color: #FFEB3B;
     }
     .whatsapp-icon {
       position: fixed;
@@ -89,6 +73,9 @@
     .timer {
       font-weight: bold;
       margin: 1rem 0;
+    }
+    .opt-btn.selected {
+      background-color: #FFEB3B !important;
     }
   </style>
 </head>
@@ -128,7 +115,7 @@
         container.innerHTML = `
           <h3>Question ${current + 1} of ${questions.length}</h3>
           <p>${q.question}</p>
-          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button>`).join('')}
+          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button><br>`).join('')}
           <div id="feedback"></div>
           <br>
           <button onclick="prev()">Previous</button>
@@ -188,7 +175,7 @@
         container.innerHTML = `<div class="timer" id="timer">Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}</div>` + `
           <h3>Question ${current + 1} of ${questions.length}</h3>
           <p>${q.question}</p>
-          ${q.options.map((opt, i) => `<button class="opt-btn ${userAnswers[current] === i ? 'selected' : ''}" data-index="${i}">${opt}</button>`).join('')}
+          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button><br>`).join('')}
           <br>
           <button onclick="prev()">Previous</button>
           <button onclick="next()">Next</button>

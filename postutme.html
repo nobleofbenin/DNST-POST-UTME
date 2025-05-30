@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DNST Post UTME Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <img src="logo.jpg" alt="DNST Logo" class="logo" />
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="whatsapp-note">
+    <p>To join the Post UTME WhatsApp class, click the WhatsApp icon and send: <strong>"Hello, I want inquiries for the WhatsApp Post UTME."</strong></p>
+    <a href="https://wa.me/2349156478004" target="_blank" class="whatsapp-icon">💬</a>
+  </section>
+
+  <main class="quiz-container">
+    <h1>Select Mode</h1>
+    <button onclick="startPracticeMode()">Practice Mode</button>
+    <button onclick="startExamMode()">Exam Mode</button>
+
+    <div id="quiz" class="hidden">
+      <div id="timer" class="hidden"></div>
+      <div id="question-container"></div>
+      <div id="navigation-buttons">
+        <button onclick="prevQuestion()" id="prevBtn">Previous</button>
+        <button onclick="nextQuestion()" id="nextBtn">Next</button>
+        <button onclick="submitExam()" id="submitBtn" class="hidden">Submit Exam</button>
+      </div>
+      <div id="feedback"></div>
+      <div id="results" class="hidden"></div>
+    </div>
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
 

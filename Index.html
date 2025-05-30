@@ -1,32 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>DNST Post UTME</title>
-	<link rel="stylesheet" href="styles.css">
-	<link rel="stylesheet" href="https:                                                                     
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DNST POST UTME Practice</title>
+  <style>
+    :root {
+      --green: #34C759;
+      --yellow: #F7DC6F;
+      --white: #ffffff;
+      --gray: #f9f9f9;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--white);
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--green), var(--yellow));
+      padding: 25px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.2rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .welcome {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .mode-buttons {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .mode {
+      flex: 1 1 300px;
+      padding: 20px;
+      border: 2px solid var(--green);
+      border-radius: 12px;
+      background: var(--gray);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .mode:hover {
+      background: var(--green);
+      color: white;
+      transform: translateY(-5px);
+    }
+
+    .mode h2 {
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+    }
+
+    .mode p {
+      margin: 0;
+    }
+
+    /* WhatsApp Floating Icon */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--green);
+      color: white;
+      padding: 14px 18px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      z-index: 999;
+    }
+
+    .whatsapp-float:hover {
+      background: #2cab53;
+    }
+
+    .whatsapp-float span {
+      margin-left: 10px;
+    }
+
+    #app, #result {
+      display: none;
+    }
+
+    #question-box {
+      margin-top: 20px;
+    }
+
+    .option {
+      display: block;
+      margin: 12px 0;
+      padding: 12px;
+      border: 2px solid var(--green);
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .option:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .option.correct {
+      background: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+
+    .option.incorrect {
+      background: #e74c3c;
+      color: white;
+      border-color: #e74c3c;
+    }
+
+    .explanation {
+      background: var(--yellow);
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-	<header>
-		<h1>DNST Post UTME</h1>
-		<p>Get ready to ace your Post UTME with DNST Premium Class!</p>
-	</header>
-	<main>
-		<div class="mode-selection">
-			<button class="practice-mode">Practice Mode</button>
-			<button class="exam-mode">Exam Mode</button>
-		</div>
-		<div class="practice-mode-content">
-			<!-- Practice mode questions and feedback will go here -->
-		</div>
-		<div class="exam-mode-content">
-			<!-- Exam mode questions and results will go here -->
-		</div>
-	</main>
-	<footer>
-		<a href="https://wa.me/2349156478004" target="_blank" style="background-color: #25D366; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
-			<i class="fa fa-whatsapp"></i> Join DNST Premium Class!
-		</a>
-	</footer>
-	<script src="script.js"></script>
-</body>
-</html>
+  <header>
+    <h1>DNST POST UTME 2025</h1>
+    <p>Prepare smart, practice smarter with DNST Premium Class!</p>
+  </header>
+
+  <main>
+    <div class="welcome">
+      Get ready to ace your Post UTME with DNST Premium Class! 🎉👍<br />
+      Practice with confidence and precision. Our platform is designed to help you prepare for the best. Let's get started! 💪
+    </div>
+
+    <div class="mode-buttons">
+      <div class="mode" onclick="startMode('practice')">
+        <h2>Practice Mode</h2>
+        <p>Practice makes perfect! 🎯<br>25 questions with instant feedback.</p>
+      </div>
+      <div class="mode" onclick="startMode('exam')">
+        <h2>Exam Mode</h2>
+        <p>30 questions in 45 minutes. Results and answers after the exam.</p>
+      </div>
+    </div>
+
+    <div id="app">
+      <h3 id="q-number"></h3>
+      <div id="question-box"></div>
+      <div id="options"></div>
+      <div class="explanation" id="explanation-box"></div>
+      <br />
+      <button onclick="nextQuestion()">Next</button>
+    </div>
+
+    <div id="result">
+      <h2>Test Complete ✅</h2>
+      <p id="score"></p>
+      <button onclick="location.reload()">Go Home</button>
+    </div>
+  </main>
+
+  <a href="https://wa.me/2349156478004" class="whatsapp-float" target="_blank">
+    📱 <span>Join DNST Premium Class! Click here</span>
+  </a>

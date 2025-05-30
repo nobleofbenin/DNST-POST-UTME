@@ -1,0 +1,77 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+header {
+  background-color: #34C759;
+  color: white;
+  padding: 30px 20px;
+}
+
+header h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+header p {
+  margin-top: 10px;
+  font-size: 1.1em;
+}
+
+main {
+  padding: 20px;
+}
+
+button {
+  background-color: #F7DC6F;
+  color: #000;
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #e6c94e;
+}
+
+#quiz-container {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.whatsapp-float img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.whatsapp-float span {
+  font-weight: bold;
+}

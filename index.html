@@ -59,26 +59,20 @@
       right: 20px;
       background-color: #25D366;
       color: white;
-      padding: 10px 15px;
-      border-radius: 50%;
-      font-size: 24px;
+      padding: 15px 20px;
+      border-radius: 50px;
+      font-size: 16px;
       text-align: center;
       text-decoration: none;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
     }
     .timer {
       font-weight: bold;
       margin: 1rem 0;
-    }
-    .footer {
-      text-align: center;
-      padding: 1rem;
-      background: #f1f1f1;
-      color: #555;
-      font-size: 0.9rem;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
     }
   </style>
 </head>
@@ -95,10 +89,9 @@
     <button class="exam-btn" onclick="startExamMode()">Exam Mode</button>
   </div>
   <div class="question-area" id="quizContainer"></div>
-  <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank">💬</a>
-  <div class="footer">
-    &copy; 2025 DNST Online Tutorial. All rights reserved.
-  </div>
+  <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank">
+    💬 Join DNST Premium Class
+  </a>
 
   <script src="general.js"></script>
   <script>
@@ -119,13 +112,19 @@
         container.innerHTML = `
           <h3>Question ${current + 1} of ${questions.length}</h3>
           <p>${q.question}</p>
-          ${q.options.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button><br>`).join('')}
+          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button><br>`).join('')}
           <div id="feedback"></div>
           <br>
           <button onclick="prev()">Previous</button>
           <button onclick="next()">Next</button>
         `;
         container.style.display = 'block';
+        document.querySelectorAll('.opt-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const selected = parseInt(e.target.getAttribute('data-index'));
+            checkAnswer(selected);
+          });
+        });
       }
 
       function checkAnswer(i) {
@@ -138,13 +137,13 @@
         }
       }
 
-      function prev() {
+      window.prev = function() {
         if (current > 0) {
           current--;
           renderQuestion();
         }
       }
-      function next() {
+      window.next = function() {
         if (current < questions.length - 1) {
           current++;
           renderQuestion();
@@ -171,31 +170,37 @@
         container.innerHTML = `<div class="timer" id="timer">Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}</div>` + `
           <h3>Question ${current + 1} of ${questions.length}</h3>
           <p>${q.question}</p>
-          ${q.options.map((opt, i) => `<button onclick="select(${i})">${opt}</button><br>`).join('')}
+          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button><br>`).join('')}
           <br>
           <button onclick="prev()">Previous</button>
           <button onclick="next()">Next</button>
           <button onclick="submitExam()">Submit</button>
         `;
         container.style.display = 'block';
+        document.querySelectorAll('.opt-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const selected = parseInt(e.target.getAttribute('data-index'));
+            select(selected);
+          });
+        });
       }
 
       function select(i) {
         userAnswers[current] = i;
       }
-      function prev() {
+      window.prev = function() {
         if (current > 0) {
           current--;
           renderExam();
         }
       }
-      function next() {
+      window.next = function() {
         if (current < questions.length - 1) {
           current++;
           renderExam();
         }
       }
-      function submitExam() {
+      window.submitExam = function() {
         clearInterval(timerInterval);
         let correct = 0;
         container.innerHTML = `<h2>Exam Result</h2>`;

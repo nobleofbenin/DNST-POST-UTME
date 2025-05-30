@@ -1,172 +1,315 @@
-// general.js — General Paper Post-UTME Questions with Answers & Explanations
-
 const generalQuestions = [
   {
     question: "The following are stringed instruments except",
-    options: ["Violin", "Piano", "Guitar", "Xylophone"],
-    answer: 3,
-    explanation: "Violin and Guitar are stringed instruments. Piano has strings but is played by striking, so it's also classified as a percussion instrument. Xylophone is purely percussion."
+    options: ["violin", "piano", "guitar", "xylophone"],
+    answer: "xylophone",
+    explanation: "Xylophone is a percussion instrument, not a stringed one."
   },
   {
-    question: "If two 2μF capacitors are connected in parallel and the combination is then connected in series with a 4μF capacitor, the net capacitance will be",
-    options: ["0.6μF", "0.4μF", "0.2μF", "2μF"],
-    answer: 3,
-    explanation: "Parallel: 2μF + 2μF = 4μF. Series: 1/C = 1/4 + 1/4 = 1/2 ⇒ C = 2μF."
+    question: "If two 2µF capacitors are connected in parallel and then in series with a 4µF capacitor, what is the net capacitance?",
+    options: ["0.6µF", "0.4µF", "2.0µF", "1.33µF"],
+    answer: "1.33µF",
+    explanation: "Parallel: 2 + 2 = 4µF. Then series with 4µF: (4×4)/(4+4) = 2µF."
   },
   {
-    question: "The limiting frictional force on a body of mass 4 kg resting on an inclined plane is 20 N. What is the angle of inclination (θ)?",
+    question: "The limiting frictional force on a 4kg body on an inclined plane is 20N. What is the angle of inclination?",
     options: ["75°", "60°", "45°", "30°"],
-    answer: 1,
-    explanation: "F = mg sinθ ⇒ sinθ = 20 / (4×9.8) = 0.51 ⇒ θ ≈ 60°."
+    answer: "60°",
+    explanation: "F = mg sinθ ⇒ sinθ = 20 / (4×10) = 0.5 ⇒ θ = 60°"
   },
   {
-    question: "Which of the following has the same unit as the product of pressure and volume of a gas?",
-    options: ["Power", "Acceleration", "Work done", "Force"],
-    answer: 2,
-    explanation: "Pressure × Volume = Nm = Joule, the unit of work."
+    question: "Which of the following quantities has the same unit as the product of pressure and volume of a gas?",
+    options: ["Power", "Acceleration", "Workdone", "Force"],
+    answer: "Workdone",
+    explanation: "Pressure × Volume = Nm⁻² × m³ = Nm = Joule (unit of Workdone)."
   },
   {
-    question: "A body undergoes circular motion with angular velocity ω rad/s and radius r m. If mass is m kg, the centripetal force F is",
-    options: ["mω²", "mrω²", "mω²/r", "m/ω²"],
-    answer: 1,
-    explanation: "Centripetal force = mrω²."
+    question: "What is the expression for centripetal force F on a mass m in circular motion with radius r and angular velocity ω?",
+    options: ["mω²", "mrω²", "mω²/r", "m/r²"],
+    answer: "mrω²",
+    explanation: "F = mrω² for circular motion."
   },
   {
-    question: "What is the efficiency of a cell with internal resistance of 3Ω when it supplies current to a 7Ω resistor?",
+    question: "Efficiency of a cell with internal resistance 3Ω and external resistance 7Ω is:",
     options: ["70%", "30%", "20%", "10%"],
-    answer: 0,
-    explanation: "Efficiency = R / (R + r) = 7 / (7 + 3) = 0.7 = 70%."
+    answer: "70%",
+    explanation: "Efficiency = R / (R + r) = 7 / (7+3) = 0.7 = 70%."
   },
   {
-    question: "Which of the following compounds is not obtained by polymerization?",
+    question: "Which compound is not obtained by polymerization?",
     options: ["Plastic", "Polythene", "Petroleum", "Cellulose"],
-    answer: 2,
-    explanation: "Petroleum is a mixture of hydrocarbons, not a polymer."
+    answer: "Petroleum",
+    explanation: "Petroleum is a natural mixture; not a polymer product."
   },
   {
-    question: "A specimen of zinc contained zinc oxide. 0.80g of this specimen reacted with acid to give 215 cm³ of hydrogen at 17°C and 770 mmHg. What is the % of zinc oxide? [32.5g Zn → 1g H]",
+    question: "215cm³ of H₂ collected from 0.80g zinc-acid mix. Find % of ZnO. (32.5g Zn = 1g H)",
     options: ["15%", "25%", "35%", "45%"],
-    answer: 1,
-    explanation: "Using gas laws and Zn stoichiometry, 0.6g was Zn, 0.2g was ZnO ⇒ (0.2/0.8)×100 = 25%."
+    answer: "25%",
+    explanation: "1g H = 32.5g Zn; 0.215g H ⇒ Zn = 0.215×32.5 = ~7g; compare with 0.8g."
   },
   {
-    question: "A measure of disorderliness in a chemical system is known as",
-    options: ["Enthalpy", "Entropy", "Free energy", "Activation energy"],
-    answer: 1,
-    explanation: "Entropy measures randomness or disorder in a system."
+    question: "A measure of the degree of disorderliness in a chemical system is:",
+    options: ["enthalpy", "entropy", "free energy", "activation energy"],
+    answer: "entropy",
+    explanation: "Entropy measures disorder or randomness in a system."
   },
   {
-    question: "In the redox reaction: Cr₂O₇²⁻ + 6Fe²⁺ + 14H⁺ → 2Cr³⁺ + 6Fe³⁺ + 7H₂O, the oxidation number of chromium changes from",
-    options: ["+7 to +3", "+6 to +3", "–6 to +3", "–2 to +6"],
-    answer: 1,
-    explanation: "In dichromate (Cr₂O₇²⁻), Cr is +6 and reduced to +3."
+    question: "In redox reaction, oxidation number of Cr changes from:",
+    options: ["+7 to +3", "+6 to +3", "-6 to +3", "-2 to +6"],
+    answer: "+6 to +3",
+    explanation: "Cr changes from +6 in Cr₂O₇²⁻ to +3 in Cr³⁺."
   },
   {
-    question: "A pregnant woman has the genotype AS. What is the probability that her baby will have sickle cell anaemia if the father is also AS?",
-    options: ["1 in 2", "1 in 4", "3 in 4", "1 in 3"],
-    answer: 1,
-    explanation: "AS × AS gives 25% (1 in 4) chance of SS genotype."
+    question: "Which metal dissolves in aqueous sodium hydroxide?",
+    options: ["Calcium", "Copper", "Aluminium", "Iron"],
+    answer: "Aluminium",
+    explanation: "Aluminium reacts with NaOH to form sodium aluminate and hydrogen."
   },
   {
-    question: "The mineral required for the formation of blood cells is",
-    options: ["Iron", "Calcium", "Phosphorus", "Iodine"],
-    answer: 0,
-    explanation: "Iron is essential for hemoglobin and red blood cell production."
+    question: "Which alloy is used for plumbing and welding?",
+    options: ["lead and tin", "lead and antimony", "iron and aluminium", "copper and tin"],
+    answer: "lead and tin",
+    explanation: "Solder (used in plumbing) is made from lead and tin."
   },
   {
-    question: "The part of the human brain responsible for coordination and balance is",
-    options: ["Medulla", "Cerebellum", "Cerebrum", "Thalamus"],
-    answer: 1,
-    explanation: "Cerebellum controls coordination and balance."
+    question: "Deficiency of Vitamin B1 causes:",
+    options: ["goitre", "beri-beri", "scurvy", "pellagra"],
+    answer: "beri-beri",
+    explanation: "Vitamin B1 (thiamine) deficiency causes beri-beri."
   },
   {
-    question: "Which of the following best describes a democracy?",
-    options: ["Rule by the richest", "Rule by the military", "Rule by elected representatives", "Rule by monarchs"],
-    answer: 2,
-    explanation: "Democracy is rule by elected representatives."
+    question: "Which is NOT a component of guard cells?",
+    options: ["Chloroplasts", "Nucleus", "Thin inner wall", "Rough spike"],
+    answer: "Rough spike",
+    explanation: "Guard cells do not have 'rough spikes'."
   },
   {
-    question: "The main organ of the United Nations responsible for maintaining international peace and security is the",
-    options: ["General Assembly", "Security Council", "Trusteeship Council", "Secretariat"],
-    answer: 1,
-    explanation: "The UN Security Council maintains international peace and security."
+    question: "Enzymes for glycolysis are located in the:",
+    options: ["mitochondria", "golgi apparatus", "cytoplasm", "nucleus"],
+    answer: "cytoplasm",
+    explanation: "Glycolysis occurs in the cytoplasm."
   },
   {
-    question: "Which organ of government interprets the laws?",
-    options: ["Executive", "Legislature", "Judiciary", "Civil service"],
-    answer: 2,
-    explanation: "The judiciary interprets laws."
+    question: "Light is required in photosynthesis to:",
+    options: ["oxidize water", "split water", "reduce CO₂", "fix CO₂"],
+    answer: "split water",
+    explanation: "Light splits water into H and O (photolysis)."
   },
   {
-    question: "The law of diminishing returns applies to",
-    options: ["Short-run production", "Long-run production", "Fixed factors only", "All economic systems"],
-    answer: 0,
-    explanation: "It applies in the short run when at least one factor is fixed."
+    question: "Diploid chromosome number in humans is:",
+    options: ["46", "23", "48", "26"],
+    answer: "46",
+    explanation: "Humans have 46 chromosomes (23 pairs)."
   },
   {
-    question: "In Economics, utility refers to",
-    options: ["Cost of production", "Satisfaction derived from consumption", "Scarcity of goods", "Value of money"],
-    answer: 1,
-    explanation: "Utility is satisfaction from consuming a good."
+    question: "Which is NOT part of the continental shelf?",
+    options: ["splash zone", "subtidal zone", "intertidal zone", "benthic zone"],
+    answer: "benthic zone",
+    explanation: "Benthic zone is deep sea; not part of continental shelf."
   },
   {
-    question: "The means through which government raises money to fund its activities is",
-    options: ["Importation", "Privatization", "Taxation", "Federalism"],
-    answer: 2,
-    explanation: "Governments raise revenue mainly through taxation."
+    question: "Brain part responsible for involuntary actions:",
+    options: ["medulla oblongata", "cerebellum", "pineal", "cerebrum"],
+    answer: "medulla oblongata",
+    explanation: "Medulla controls involuntary actions like heartbeat."
   },
   {
-    question: "The market structure in which there is only one seller is known as",
-    options: ["Monopoly", "Perfect competition", "Oligopoly", "Duopoly"],
-    answer: 0,
-    explanation: "Monopoly: one seller dominates the market."
+    question: "A curve in velocity-time graph means:",
+    options: ["uniform acceleration", "non-uniform acceleration", "uniform velocity", "non-uniform velocity"],
+    answer: "non-uniform acceleration",
+    explanation: "Curve implies changing acceleration."
   },
   {
-    question: "The movement of people from rural to urban areas is known as",
-    options: ["Urbanization", "Emigration", "Immigration", "Decentralization"],
-    answer: 0,
-    explanation: "Urbanization includes rural-to-urban migration."
+    question: "A 1kg ball falls from 3m and rebounds to 2m. Energy loss?",
+    options: ["100J", "50J", "10J", "1J"],
+    answer: "10J",
+    explanation: "Loss = mg(h1 − h2) = 10(3−2) = 10J"
   },
   {
-    question: "A government budget that shows planned expenditure equals expected revenue is called",
-    options: ["Deficit budget", "Surplus budget", "Balanced budget", "Zero budget"],
-    answer: 2,
-    explanation: "Balanced budget: revenue equals expenditure."
+    question: "Projectile with max range of 40m (g=10m/s²), find velocity:",
+    options: ["400m/s", "80m/s", "20m/s", "10m/s"],
+    answer: "20m/s",
+    explanation: "Range R = u² sin(2θ)/g ⇒ u² = Rg = 400 ⇒ u = √400 = 20m/s"
   },
   {
-    question: "Which of the following is an example of a renewable natural resource?",
-    options: ["Coal", "Crude oil", "Wind", "Gold"],
-    answer: 2,
-    explanation: "Wind is renewable. Others are non-renewable."
+    question: "10kg ball hits wall at 5m/s and rebounds. Impulse?",
+    options: ["0", "25Ns", "50Ns", "100Ns"],
+    answer: "100Ns",
+    explanation: "Impulse = Δmv = 10(5 – (−5)) = 100Ns"
   },
   {
-    question: "In Nigeria, which arm of government prepares the annual budget?",
-    options: ["Legislature", "Executive", "Judiciary", "Civil Service"],
-    answer: 1,
-    explanation: "The executive prepares the budget."
+    question: "Wave with y = 20 sin(π/60 t − πx/0.5), velocity?",
+    options: ["30m/s", "60m/s", "80m/s", "120m/s"],
+    answer: "30m/s",
+    explanation: "Wave velocity = λf = (1/2)×60 = 30m/s"
   },
   {
-    question: "Which of the following is a function of the Central Bank?",
-    options: ["Granting loans to individuals", "Accepting deposits from the public", "Issuing currency", "Selling consumer goods"],
-    answer: 2,
-    explanation: "Issuing currency is a Central Bank function."
+    question: "15cm³ of hydrocarbon combusts with 75cm³ O₂ to give 45cm³ CO₂. Find hydrocarbon:",
+    options: ["CH₄", "C₂H₆", "C₃H₈", "C₄H₁₀"],
+    answer: "C₂H₆",
+    explanation: "Balanced equation shows C₂H₆ + 3.5O₂ → 2CO₂ + 3H₂O"
   },
   {
-    question: "A substance that speeds up a chemical reaction without being consumed is called a",
-    options: ["Reactant", "Inhibitor", "Catalyst", "Solvent"],
-    answer: 2,
-    explanation: "A catalyst speeds up a reaction and remains unchanged."
+    question: "Which reagent distinguishes alkanals from alkanones?",
+    options: ["HCN", "NaHCO₃", "Fehling's", "2,4-DNP"],
+    answer: "Fehling's",
+    explanation: "Fehling’s reagent reacts with aldehydes (alkanals), not ketones."
   },
   {
-    question: "Which vitamin is essential for blood clotting?",
-    options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin K"],
-    answer: 3,
-    explanation: "Vitamin K aids blood clotting."
+    question: "Photochlorination of ethanoic acid produces:",
+    options: ["CH₃COOCl + HCl", "CH₃COCl + HOCl", "ClCH₂COCl + HCl", "ClCH₂COOH + HCl"],
+    answer: "ClCH₂COOH + HCl",
+    explanation: "Chlorine substitutes on CH₃ group → ClCH₂COOH."
   },
   {
-    question: "The imaginary lines that run parallel to the equator are called",
-    options: ["Longitudes", "Latitudes", "Axes", "Meridians"],
-    answer: 1,
-    explanation: "Latitudes run parallel to the equator."
+    question: "Reaction of ethyl ethanoate and ammonia gives:",
+    options: ["Aminoethane and ethanol", "Aminomethane and propan-1-ol", "Ethanamide and ethanol", "Methanamide and propan-1-ol"],
+    answer: "Ethanamide and ethanol",
+    explanation: "Ester + NH₃ → amide + alcohol."
+  },
+  {
+    question: "Effervescence in water occurs with:",
+    options: ["Calcium", "Copper", "Sulphur", "Lead"],
+    answer: "Calcium",
+    explanation: "Calcium reacts with water to release H₂ gas (effervescence)."
+  },
+  {
+    question: "Charring of sugar is due to:",
+    options: ["reduction", "hydrolysis", "dehydration", "fermentation"],
+    answer: "dehydration",
+    explanation: "Dehydration of sugar with acids removes water and chars it."
+  },
+  {
+    question: "How many moles of Zn deposited by 3F electricity? [1F = 96500C]",
+    options: ["1.5", "2.3", "3.4", "0.15"],
+    answer: "1.5",
+    explanation: "Zn²⁺ needs 2F/mol → 3F gives 1.5mol Zn."
+  },
+  {
+    question: "Colours in rainbow are due to:",
+    options: ["polarization", "absorption", "refraction", "interference"],
+    answer: "refraction",
+    explanation: "Light refracted and dispersed by raindrops."
+  },
+  {
+    question: "Coulomb's law in air is:",
+    options: ["F = q²/x", "F = q/qx", "F = q²/4πε₀x²", "F = q²/4πx"],
+    answer: "F = q²/4πε₀x²",
+    explanation: "Coulomb's law: F = kq₁q₂/r² = q²/4πε₀x²"
+  },
+  {
+    question: "Eye defect corrected by converging lens?",
+    options: ["myopia", "hypermetropia", "astigmatism", "night blindness"],
+    answer: "hypermetropia",
+    explanation: "Converging lenses correct long-sightedness (hypermetropia)."
+  },
+  {
+    question: "Which arthropod lacks antennae?",
+    options: ["Spider", "Prawn", "Cockroach", "Millipede"],
+    answer: "Spider",
+    explanation: "Spiders are arachnids and have no antennae."
+  },
+  {
+    question: "Red blood cells in hypertonic solution become:",
+    options: ["crenated", "plasmolysed", "haemolysed", "unaffected"],
+    answer: "crenated",
+    explanation: "Hypertonic solutions cause water loss from cells (crenation)."
+  },
+  {
+    question: "OH⁻ concentration in pH 10 NaOH solution is:",
+    options: ["10⁻²", "10⁻⁴", "10⁻³", "10⁻¹"],
+    answer: "10⁻⁴",
+    explanation: "pOH = 14 – pH = 4 ⇒ [OH⁻] = 10⁻⁴"
+  },
+  {
+    question: "Reagent to remove CO₂ from gas mixture:",
+    options: ["aq. KOH", "alkaline pyrogallol", "conc. H₂SO₄", "CaO"],
+    answer: "aq. KOH",
+    explanation: "KOH absorbs CO₂ forming carbonate."
+  },
+  {
+    question: "Which is not a protozoan?",
+    options: ["Amoeba", "Chlamydomonas", "Plasmodium", "Trypanosome"],
+    answer: "Chlamydomonas",
+    explanation: "Chlamydomonas is an alga, not protozoa."
+  },
+  {
+    question: "Plant with modified leaves to trap animals:",
+    options: ["garlic", "cactus", "sundew", "hibiscus"],
+    answer: "sundew",
+    explanation: "Sundew traps insects with sticky leaves."
+  },
+  {
+    question: "Blood group O father × AB mother. % chance of O child?",
+    options: ["0%", "50%", "70%", "100%"],
+    answer: "0%",
+    explanation: "Group O is recessive; AB × O cannot produce O offspring."
+  },
+  {
+    question: "Air pollutant causing acid rain:",
+    options: ["CO", "SO₂", "Smoke", "Dust"],
+    answer: "SO₂",
+    explanation: "SO₂ + H₂O → H₂SO₄ (acid rain)."
+  },
+  {
+    question: "Moving-coil galvanometer works on:",
+    options: ["Induction", "Magnetic effect", "Force on current conductor", "Electrochemical effect"],
+    answer: "Force on current conductor",
+    explanation: "It uses Lorentz force to deflect the needle."
+  },
+  {
+    question: "In RLC circuit, power consumed is given by:",
+    options: ["I²R", "(I²R)/(R² + (XL − XC)²)", "I²/(XL + XC)", "I²XC"],
+    answer: "I²R",
+    explanation: "Only resistor consumes power in AC circuit: P = I²R."
+  },
+  {
+    question: "Anaerobic respiration excludes:",
+    options: ["H₂O and CO₂ as by-products", "No oxygen", "Alcohol or lactic acid", "Occurs in cytoplasm"],
+    answer: "H₂O and CO₂ as by-products",
+    explanation: "Anaerobic respiration does not produce water as by-product."
+  },
+  {
+    question: "Which does NOT involve meiosis?",
+    options: ["Root tip division", "Oogenesis", "Spermatogenesis", "Pollen formation"],
+    answer: "Root tip division",
+    explanation: "Root tip involves mitosis, not meiosis."
+  },
+  {
+    question: "Organism with homodont dentition?",
+    options: ["Agama lizard", "Rat", "Cat", "Man"],
+    answer: "Agama lizard",
+    explanation: "Homodont: same type of teeth; found in reptiles like Agama."
   }
 ];
+const generalQuestions = [
+  {
+    question: "Functional unit of kidney is",
+    options: ["Henle’s loop", "Bowman’s capsule", "Nephron", "Glomerulus"],
+    answer: "Nephron",
+    explanation: "The nephron is the basic structural and functional unit of the kidney."
+  },
+  {
+    question: "If secondary consumers decrease, producers will",
+    options: [
+      "Decrease due to more primary consumers",
+      "Decrease then increase",
+      "Not be affected",
+      "Reach climax population"
+    ],
+    answer: "Decrease due to more primary consumers",
+    explanation: "A decrease in secondary consumers leads to more primary consumers feeding on producers, reducing producer numbers."
+  },
+  {
+    question: "Flower developing into fruit without fertilization is called",
+    options: [
+      "Asexual reproduction",
+      "Sexual reproduction",
+      "Cloning",
+      "Parthenocarpy"
+    ],
+    answer: "Parthenocarpy",
+    explanation: "Parthenocarpy is fruit development without fertilization."
+  }
+];
+export default generalQuestions;

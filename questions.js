@@ -1,10 +1,15 @@
 const questions = [
   {
-    question: "Sample question: What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "4",
-    explanation: "2 + 2 = 4"
+    question: "What is the capital of Nigeria?",
+    options: ["Abuja", "Lagos", "Kano", "Port Harcourt"],
+    answer: "Abuja",
+    explanation: "Abuja became the capital of Nigeria in 1991, replacing Lagos."
   },
-  // Add more questions here...
+  {
+    question: "Who discovered gravity?",
+    options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Thomas Edison"],
+    answer: "Isaac Newton",
+    explanation: "Newton formulated the law of universal gravitation in the 17th century."
+  },
+  // Add more questions like these...
 ];
-

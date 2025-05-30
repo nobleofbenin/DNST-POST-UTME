@@ -5,37 +5,233 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DNST POST UTME PRACTICE</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #006400;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .welcome {
+      padding: 2rem;
+      text-align: center;
+      background: #f5fff5;
+    }
+    .welcome h2 {
+      color: #228B22;
+      font-size: 2rem;
+    }
+    .welcome p {
+      font-size: 1.1rem;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .mode-buttons {
+      text-align: center;
+      margin: 2rem;
+    }
+    .mode-buttons button {
+      padding: 1rem 2rem;
+      margin: 1rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .practice-btn {
+      background-color: #FFD700;
+      color: #000;
+    }
+    .exam-btn {
+      background-color: #32CD32;
+      color: white;
+    }
+    .practice-btn:hover,
+    .exam-btn:hover {
+      opacity: 0.85;
+    }
+    .question-area {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: none;
+    }
+    .whatsapp-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 30px;
+      line-height: 60px;
+      text-decoration: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .timer {
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>DNST POST UTME PRACTICE</h1>
-    <p>Welcome to the DNST online Post UTME practice platform. Select your exam category to begin.</p>
   </header>
 
-  <main class="main-container">
-    <section class="exam-card">
-      <h2>DNST UNIBEN POST UTME PRACTICE QUESTIONS</h2>
-      <a href="uniben.html" class="btn">Enter Practice</a>
-    </section>
+  <div class="welcome">
+    <h2>Welcome to DNST SmartPrep Platform</h2>
+    <p>
+      Get exam-ready with our expertly reviewed POST-UTME questions. Choose a mode that suits your pace—Practice or Exam. Our platform is designed to make learning fast, focused, and effective. Let's help you score higher!
+    </p>
+  </div>
 
-    <section class="exam-card">
-      <h2>DNST DELSU POST UTME PRACTICE QUESTIONS</h2>
-      <a href="delsu.html" class="btn">Enter Practice</a>
-    </section>
+  <div class="mode-buttons">
+    <button class="practice-btn" onclick="startPracticeMode()">Practice Mode</button>
+    <button class="exam-btn" onclick="startExamMode()">Exam Mode</button>
+  </div>
 
-    <section class="exam-card">
-      <h2>DNST SCHOOL OF NURSING POST UTME PRACTICE QUESTIONS</h2>
-      <a href="nursing.html" class="btn">Enter Practice</a>
-    </section>
+  <div class="question-area" id="quizContainer"></div>
 
-    <section class="exam-card">
-      <h2>DNST GENERAL PAPER POST UTME PRACTICE QUESTIONS</h2>
-      <a href="general.html" class="btn">Enter Practice</a>
-    </section>
-  </main>
+  <!-- WhatsApp contact icon -->
+  <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank" title="Chat with us on WhatsApp">
+    📱
+  </a>
 
-  <footer>
-    <p>&copy; 2025 DNST Tutorials. All rights reserved.</p>
-  </footer>
+  <script src="general.js"></script>
+  <script>
+    const container = document.getElementById('quizContainer');
+    let timerInterval;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    window.startPracticeMode = function () {
+      const questions = shuffle(generalQuestions).slice(0, 25);
+      let current = 0;
+      renderQuestion();
+
+      function renderQuestion() {
+        const q = questions[current];
+        container.innerHTML = `
+          <h3>Question ${current + 1} of ${questions.length}</h3>
+          <p>${q.question}</p>
+          ${q.options.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button><br>`).join('')}
+          <div id="feedback"></div>
+          <br>
+          <button onclick="prev()">Previous</button>
+          <button onclick="next()">Next</button>
+        `;
+        container.style.display = 'block';
+      }
+
+      window.checkAnswer = function (i) {
+        const q = questions[current];
+        const fb = document.getElementById('feedback');
+        if (i === q.answer) {
+          fb.innerHTML = `<p style='color: green'>✅ Correct! ${q.explanation}</p>`;
+        } else {
+          fb.innerHTML = `<p style='color: red'>❌ Wrong. ${q.explanation}</p>`;
+        }
+      };
+
+      window.prev = function () {
+        if (current > 0) {
+          current--;
+          renderQuestion();
+        }
+      };
+
+      window.next = function () {
+        if (current < questions.length - 1) {
+          current++;
+          renderQuestion();
+        }
+      };
+    };
+
+    window.startExamMode = function () {
+      const questions = shuffle(generalQuestions).slice(0, 50);
+      let userAnswers = Array(50).fill(null);
+      let current = 0;
+      let timeLeft = 3600;
+
+      renderExam();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        const min = Math.floor(timeLeft / 60);
+        const sec = (timeLeft % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `Time Left: ${min}:${sec}`;
+        if (timeLeft <= 0) submitExam();
+      }, 1000);
+
+      function renderExam() {
+        const q = questions[current];
+        container.innerHTML = `
+          <div class="timer" id="timer">Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}</div>
+          <h3>Question ${current + 1} of ${questions.length}</h3>
+          <p>${q.question}</p>
+          ${q.options.map((opt, i) => `<button onclick="select(${i})">${opt}</button><br>`).join('')}
+          <br>
+          <button onclick="prev()">Previous</button>
+          <button onclick="next()">Next</button>
+          <button onclick="submitExam()">Submit</button>
+        `;
+        container.style.display = 'block';
+      }
+
+      window.select = function (i) {
+        userAnswers[current] = i;
+      };
+
+      window.prev = function () {
+        if (current > 0) {
+          current--;
+          renderExam();
+        }
+      };
+
+      window.next = function () {
+        if (current < questions.length - 1) {
+          current++;
+          renderExam();
+        }
+      };
+
+      window.submitExam = function () {
+        clearInterval(timerInterval);
+        let correct = 0;
+        container.innerHTML = `<h2>Exam Result</h2>`;
+        questions.forEach((q, i) => {
+          const ua = userAnswers[i];
+          const isCorrect = ua === q.answer;
+          if (isCorrect) correct++;
+          container.innerHTML += `
+            <div>
+              <p><strong>Q${i + 1}:</strong> ${q.question}</p>
+              <p>Your answer: ${ua !== null ? q.options[ua] : 'None'} (${isCorrect ? '✅ Correct' : '❌ Wrong'})</p>
+              <p><em>${q.explanation}</em></p>
+              <hr>
+            </div>
+          `;
+        });
+        container.innerHTML = `<h2>Score: ${correct * 2}/100</h2>` + container.innerHTML;
+      };
+    };
+  </script>
 </body>
 </html>

@@ -49,7 +49,7 @@
     }
     .question-area {
       max-width: 800px;
-      margin: 3rem auto 0;
+      margin: 1rem auto 5rem;
       padding: 2rem;
       display: none;
     }
@@ -93,140 +93,9 @@
   </div>
   <div class="question-area" id="quizContainer"></div>
   <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank">
-    💬 Join DNST Premium Class
+    💬 Join DNST Premium Class - Click Here
   </a>
 
   <script src="general.js"></script>
-  <script>
-    const container = document.getElementById('quizContainer');
-    let timerInterval;
-
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    function startPracticeMode() {
-      const questions = shuffle(generalQuestions).slice(0, 25);
-      let current = 0;
-      renderQuestion();
-
-      function renderQuestion() {
-        const q = questions[current];
-        container.innerHTML = `
-          <h3>Question ${current + 1} of ${questions.length}</h3>
-          <p>${q.question}</p>
-          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button><br>`).join('')}
-          <div id="feedback"></div>
-          <br>
-          <button onclick="prev()">Previous</button>
-          <button onclick="next()">Next</button>
-        `;
-        container.style.display = 'block';
-        document.querySelectorAll('.opt-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-            e.target.classList.add('selected');
-            const selected = parseInt(e.target.getAttribute('data-index'));
-            checkAnswer(selected);
-          });
-        });
-      }
-
-      function checkAnswer(i) {
-        const q = questions[current];
-        const fb = document.getElementById('feedback');
-        if (i === q.answer) {
-          fb.innerHTML = `<p style='color: green'>Correct! ${q.explanation}</p>`;
-        } else {
-          fb.innerHTML = `<p style='color: red'>Wrong. ${q.explanation}</p>`;
-        }
-      }
-
-      window.prev = function() {
-        if (current > 0) {
-          current--;
-          renderQuestion();
-        }
-      }
-      window.next = function() {
-        if (current < questions.length - 1) {
-          current++;
-          renderQuestion();
-        }
-      }
-    }
-
-    function startExamMode() {
-      const questions = shuffle(generalQuestions).slice(0, 50);
-      let userAnswers = Array(50).fill(null);
-      let current = 0;
-      let timeLeft = 3600;
-      container.innerHTML = `<div class="timer" id="timer"></div>`;
-      renderExam();
-
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('timer').innerText = `Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}`;
-        if (timeLeft <= 0) submitExam();
-      }, 1000);
-
-      function renderExam() {
-        const q = questions[current];
-        container.innerHTML = `<div class="timer" id="timer">Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}</div>` + `
-          <h3>Question ${current + 1} of ${questions.length}</h3>
-          <p>${q.question}</p>
-          ${q.options.map((opt, i) => `<button class="opt-btn" data-index="${i}">${opt}</button><br>`).join('')}
-          <br>
-          <button onclick="prev()">Previous</button>
-          <button onclick="next()">Next</button>
-          <button onclick="submitExam()">Submit</button>
-        `;
-        container.style.display = 'block';
-        document.querySelectorAll('.opt-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-            e.target.classList.add('selected');
-            const selected = parseInt(e.target.getAttribute('data-index'));
-            select(selected);
-          });
-        });
-      }
-
-      function select(i) {
-        userAnswers[current] = i;
-      }
-      window.prev = function() {
-        if (current > 0) {
-          current--;
-          renderExam();
-        }
-      }
-      window.next = function() {
-        if (current < questions.length - 1) {
-          current++;
-          renderExam();
-        }
-      }
-      window.submitExam = function() {
-        clearInterval(timerInterval);
-        let correct = 0;
-        container.innerHTML = `<h2>Exam Result</h2>`;
-        questions.forEach((q, i) => {
-          const ua = userAnswers[i];
-          const isCorrect = ua === q.answer;
-          if (isCorrect) correct++;
-          container.innerHTML += `
-            <div>
-              <p><strong>Q${i + 1}:</strong> ${q.question}</p>
-              <p>Your answer: ${ua !== null ? q.options[ua] : 'None'} (${isCorrect ? 'Correct' : 'Wrong'})</p>
-              <p><em>${q.explanation}</em></p>
-              <hr>
-            </div>
-          `;
-        });
-        container.innerHTML = `<h2>Score: ${correct * 2}/100</h2>` + container.innerHTML;
-      }
-    }
-  </script>
 </body>
 </html>

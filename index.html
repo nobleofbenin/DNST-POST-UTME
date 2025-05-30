@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DNST POST UTME PRACTICE</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,13 +26,6 @@
     }
     .welcome h2 {
       color: #228B22;
-      font-size: 2rem;
-    }
-    .welcome p {
-      font-size: 1.1rem;
-      color: #333;
-      max-width: 600px;
-      margin: 0 auto;
     }
     .mode-buttons {
       text-align: center;
@@ -41,11 +34,10 @@
     .mode-buttons button {
       padding: 1rem 2rem;
       margin: 1rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s ease;
     }
     .practice-btn {
       background-color: #FFD700;
@@ -54,10 +46,6 @@
     .exam-btn {
       background-color: #32CD32;
       color: white;
-    }
-    .practice-btn:hover,
-    .exam-btn:hover {
-      opacity: 0.85;
     }
     .question-area {
       max-width: 800px;
@@ -69,21 +57,28 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 60px;
-      height: 60px;
       background-color: #25D366;
       color: white;
+      padding: 10px 15px;
       border-radius: 50%;
+      font-size: 24px;
       text-align: center;
-      font-size: 30px;
-      line-height: 60px;
       text-decoration: none;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     .timer {
       font-weight: bold;
       margin: 1rem 0;
+    }
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f1f1f1;
+      color: #555;
+      font-size: 0.9rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
   </style>
 </head>
@@ -91,25 +86,19 @@
   <header>
     <h1>DNST POST UTME PRACTICE</h1>
   </header>
-
   <div class="welcome">
-    <h2>Welcome to DNST SmartPrep Platform</h2>
-    <p>
-      Get exam-ready with our expertly reviewed POST-UTME questions. Choose a mode that suits your pace—Practice or Exam. Our platform is designed to make learning fast, focused, and effective. Let's help you score higher!
-    </p>
+    <h2>Welcome to the DNST Online Tutorial</h2>
+    <p>Prepare smarter and faster with our expertly reviewed Post-UTME questions. Choose your mode and get started now!</p>
   </div>
-
   <div class="mode-buttons">
     <button class="practice-btn" onclick="startPracticeMode()">Practice Mode</button>
     <button class="exam-btn" onclick="startExamMode()">Exam Mode</button>
   </div>
-
   <div class="question-area" id="quizContainer"></div>
-
-  <!-- WhatsApp contact icon -->
-  <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank" title="Chat with us on WhatsApp">
-    📱
-  </a>
+  <a class="whatsapp-icon" href="https://wa.me/2349156478004" target="_blank">💬</a>
+  <div class="footer">
+    &copy; 2025 DNST Online Tutorial. All rights reserved.
+  </div>
 
   <script src="general.js"></script>
   <script>
@@ -120,7 +109,7 @@
       return array.sort(() => Math.random() - 0.5);
     }
 
-    window.startPracticeMode = function () {
+    function startPracticeMode() {
       const questions = shuffle(generalQuestions).slice(0, 25);
       let current = 0;
       renderQuestion();
@@ -139,50 +128,47 @@
         container.style.display = 'block';
       }
 
-      window.checkAnswer = function (i) {
+      function checkAnswer(i) {
         const q = questions[current];
         const fb = document.getElementById('feedback');
         if (i === q.answer) {
-          fb.innerHTML = `<p style='color: green'>✅ Correct! ${q.explanation}</p>`;
+          fb.innerHTML = `<p style='color: green'>Correct! ${q.explanation}</p>`;
         } else {
-          fb.innerHTML = `<p style='color: red'>❌ Wrong. ${q.explanation}</p>`;
+          fb.innerHTML = `<p style='color: red'>Wrong. ${q.explanation}</p>`;
         }
-      };
+      }
 
-      window.prev = function () {
+      function prev() {
         if (current > 0) {
           current--;
           renderQuestion();
         }
-      };
-
-      window.next = function () {
+      }
+      function next() {
         if (current < questions.length - 1) {
           current++;
           renderQuestion();
         }
-      };
-    };
+      }
+    }
 
-    window.startExamMode = function () {
+    function startExamMode() {
       const questions = shuffle(generalQuestions).slice(0, 50);
       let userAnswers = Array(50).fill(null);
       let current = 0;
       let timeLeft = 3600;
-
+      container.innerHTML = `<div class="timer" id="timer"></div>`;
       renderExam();
+
       timerInterval = setInterval(() => {
         timeLeft--;
-        const min = Math.floor(timeLeft / 60);
-        const sec = (timeLeft % 60).toString().padStart(2, '0');
-        document.getElementById('timer').innerText = `Time Left: ${min}:${sec}`;
+        document.getElementById('timer').innerText = `Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}`;
         if (timeLeft <= 0) submitExam();
       }, 1000);
 
       function renderExam() {
         const q = questions[current];
-        container.innerHTML = `
-          <div class="timer" id="timer">Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}</div>
+        container.innerHTML = `<div class="timer" id="timer">Time Left: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}</div>` + `
           <h3>Question ${current + 1} of ${questions.length}</h3>
           <p>${q.question}</p>
           ${q.options.map((opt, i) => `<button onclick="select(${i})">${opt}</button><br>`).join('')}
@@ -194,25 +180,22 @@
         container.style.display = 'block';
       }
 
-      window.select = function (i) {
+      function select(i) {
         userAnswers[current] = i;
-      };
-
-      window.prev = function () {
+      }
+      function prev() {
         if (current > 0) {
           current--;
           renderExam();
         }
-      };
-
-      window.next = function () {
+      }
+      function next() {
         if (current < questions.length - 1) {
           current++;
           renderExam();
         }
-      };
-
-      window.submitExam = function () {
+      }
+      function submitExam() {
         clearInterval(timerInterval);
         let correct = 0;
         container.innerHTML = `<h2>Exam Result</h2>`;
@@ -223,15 +206,15 @@
           container.innerHTML += `
             <div>
               <p><strong>Q${i + 1}:</strong> ${q.question}</p>
-              <p>Your answer: ${ua !== null ? q.options[ua] : 'None'} (${isCorrect ? '✅ Correct' : '❌ Wrong'})</p>
+              <p>Your answer: ${ua !== null ? q.options[ua] : 'None'} (${isCorrect ? 'Correct' : 'Wrong'})</p>
               <p><em>${q.explanation}</em></p>
               <hr>
             </div>
           `;
         });
         container.innerHTML = `<h2>Score: ${correct * 2}/100</h2>` + container.innerHTML;
-      };
-    };
+      }
+    }
   </script>
 </body>
 </html>

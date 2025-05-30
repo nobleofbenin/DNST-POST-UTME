@@ -4,5 +4,9 @@ const questions = [
     options: ["Lagos", "Abuja", "Kano", "Port Harcourt"],
     answer: "Abuja"
   },
-  // Add more questions as needed
+  {
+    question: "Which organ pumps blood in the human body?",
+    options: ["Lungs", "Heart", "Kidney", "Liver"],
+    answer: "Heart"
+  }
 ];

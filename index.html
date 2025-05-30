@@ -1,202 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DNST POST UTME PREP</title>
-<style>
-  body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: #fff;
-    color: #333;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    background-color: #34C759;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  main {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  .welcome {
-    background: #F7DC6F;
-    border-radius: 8px;
-    padding: 1.5rem;
-    font-size: 1.25rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    font-weight: 600;
-  }
-  .mode-select {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-  button.mode-btn {
-    background-color: #34C759;
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 10px rgba(52, 199, 89, 0.4);
-  }
-  button.mode-btn:hover {
-    background-color: #2AA64A;
-  }
-  #quiz-container {
-    max-width: 700px;
-    margin: 0 auto 4rem auto;
-    background: #f0f8f0;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgb(52 199 89 / 0.2);
-  }
-  #question-number {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  #question-text {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-  .options {
-    list-style: none;
-    padding: 0;
-  }
-  .options li {
-    background: white;
-    margin-bottom: 0.75rem;
-    padding: 0.8rem 1rem;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: border-color 0.25s ease;
-  }
-  .options li:hover {
-    border-color: #34C759;
-  }
-  .options li.correct {
-    background-color: #c6f5c0;
-    border-color: #34C759;
-  }
-  .options li.incorrect {
-    background-color: #f8c0c0;
-    border-color: #e04444;
-  }
-  #explanation {
-    margin-top: 1rem;
-    font-style: italic;
-    background-color: #F7DC6F;
-    padding: 1rem;
-    border-radius: 8px;
-    display: none;
-  }
-  #next-btn {
-    margin-top: 1.5rem;
-    background-color: #F7DC6F;
-    border: none;
-    padding: 0.75rem 2rem;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #333;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-  }
-  #next-btn:hover {
-    background-color: #e6d65c;
-  }
-  #result-container {
-    display: none;
-    max-width: 700px;
-    margin: 0 auto 4rem auto;
-    background: #d0f0d6;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 4px 8px rgb(52 199 89 / 0.3);
-    text-align: center;
-  }
-  #timer {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: #34C759;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  footer {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    background-color: #25d366;
-    border-radius: 50px;
-    padding: 0.75rem 1rem;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    box-shadow: 0 5px 10px rgba(37, 211, 102, 0.6);
-    user-select: none;
-  }
-  footer svg {
-    width: 24px;
-    height: 24px;
-    fill: white;
-  }
-  footer:hover {
-    background-color: #1ebe57;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DNST POST UTME PREP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #34C759;
+      color: white;
+      padding: 1.5em;
+      text-align: center;
+    }
+    main {
+      padding: 2em;
+      text-align: center;
+    }
+    .mode-button {
+      background-color: #F7DC6F;
+      color: #000;
+      padding: 1em 2em;
+      margin: 1em;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #quiz-container {
+      margin-top: 2em;
+      display: none;
+    }
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
 </head>
 <body>
-<header>DNST POST UTME PREP</header>
-<main>
-  <div class="welcome">
-    Get ready to ace your Post UTME with DNST Premium Class! 🎉👍<br />
-    Practice with confidence and precision. Our platform is designed to help you prepare for the best. Let's get started! 💪
+  <header>
+    <h1>DNST POST UTME PREP</h1>
+    <p>Get ready to ace your Post UTME with DNST Premium Class! 🎉👍</p>
+  </header>
+
+  <main>
+    <button class="mode-button" onclick="startPracticeMode()">Practice Mode</button>
+    <p>Practice makes perfect! 🎯 Get 25 random questions with instant feedback and explanations.</p>
+
+    <button class="mode-button" onclick="startExamMode()">Exam Mode</button>
+    <p>Time to put your skills to the test! ⏰ 30 random questions under 45 minutes. See your result at the end.</p>
+
+    <div id="quiz-container"></div>
+  </main>
+
+  <div id="whatsapp-btn" onclick="joinWhatsApp()">
+    📱 Join DNST Premium Class! Click here
   </div>
 
-  <div class="mode-select">
-    <button class="mode-btn" id="practice-mode-btn" title="Practice makes perfect! 🎯 Get 25 random questions with instant feedback and explanations.">Practice Mode</button>
-    <button class="mode-btn" id="exam-mode-btn" title="Time to put your skills to the test! ⏰ Get 30 random questions under 45 minutes and see your results at the end.">Exam Mode</button>
-  </div>
-
-  <div id="timer" style="display:none;"></div>
-
-  <div id="quiz-container" style="display:none;">
-    <div id="question-number"></div>
-    <div id="question-text"></div>
-    <ul class="options"></ul>
-    <div id="explanation"></div>
-    <button id="next-btn" style="display:none;">Next Question</button>
-  </div>
-
-  <div id="result-container">
-    <h2>Your Results</h2>
-    <p id="score"></p>
-    <button id="restart-btn">Restart</button>
-  </div>
-</main>
-
-<footer id="whatsapp-btn" title="To join DNST premium class click on this icon" aria-label="WhatsApp Link">
-  <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.77 11.77 0 0012 0C5.37 0 .01 5.36 0 12a11.7 11.7 0 001.6 6L0 24l6-1.58a11.73 11.73 0 005.9 1.54c6.63 0 12-5.36 12-12a11.77 11.77 0 00-2.48-8.46zm-8.42 17a8.12 8.12 0 01-4.23-1.19l-.3-.18-3.14.83.83-3.07-.19-.3a8.18 8.18 0 111.02 3.8zm4.62-5.64c-.26-.13-1.52-.75-1.75-.84s-.4-.13-.56.13-.64.83-.78 1c-.14.13-.27.15-.5.05a6.39 6.39 0 01-1.87-1.16 7.12 7.12 0 01-1.32-1.62c-.14-.26 0-.4.1-.54.1-.13.26-.3.39-.45a.66.66 0 00.1-.16c.04-.13 0-.24-.02-.35s-.5-1.18-.68-1.62c-.18-.42-.37-.37-.51-.38a1.37 1.37 0 00-.47 0c-.16 0-.36.05-.55.26s-.72.7-.72 1.72.74 2 .84 2.14c.1.13 1.46 2.23 3.54 3.13a12.13 12.13 0 001.93.83c.81.33 1.55.28 2.14.17a4.32 4.32 0 001.56-1.02 3.55 3.55 0 00.93-1.43c.08-.14.08-.27.06-.37-.02-.1-.18-.13-.44-.25z"/></svg>
-  To join DNST premium class click on this icon
-</footer>
-
-<script src="questions.js"></script>
-<script src="script.js"></script>
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

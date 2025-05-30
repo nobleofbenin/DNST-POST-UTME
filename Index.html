@@ -1,240 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DNST POST UTME 2025 - Practice & Exam Mode</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5fff5;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    text-align: center;
-  }
-  header {
-    background: linear-gradient(90deg, green, yellow);
-    color: white;
-    padding: 20px 15px;
-  }
-  .intro {
-    padding: 40px 20px;
-  }
-  .mode-buttons button {
-    background-color: green;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    margin: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .mode-buttons button:hover {
-    background-color: #006400;
-  }
-  .whatsapp-float {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25d366;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  .options button.option-btn {
-    background: #fff;
-    border: 2px solid green;
-    padding: 10px 15px;
-    margin: 8px 0;
-    width: 80%;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-  .options button.option-btn:hover {
-    background: #d4ffd4;
-  }
-</style>
+	<title>DNST Post UTME</title>
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https:                                                                     
 </head>
 <body>
-  <header>
-    <h1>🎓 DNST POST UTME 2025</h1>
-    <p>Prepare smart, practice smarter. Join thousands of candidates getting it right!</p>
-  </header>
-
-  <main id="main">
-    <section class="intro">
-      <h2>Welcome to DNST Online Testing Platform</h2>
-      <p>Select a mode to begin your journey to success:</p>
-      <div class="mode-buttons">
-        <button id="practiceBtn">Practice Mode</button>
-        <button id="examBtn">Exam Mode</button>
-      </div>
-    </section>
-  </main>
-
-  <a
-    href="https://wa.me/2349156478004"
-    class="whatsapp-float"
-    target="_blank"
-    rel="noopener noreferrer"
-    title="Join DNST Premium Class"
-  >💬 Join DNST Premium Class</a>
-
-<script>
-const questions = [
-  {
-    question: "What is the capital of Nigeria?",
-    options: ["Lagos", "Abuja", "Kano", "Port Harcourt"],
-    answer: "Abuja",
-    explanation: "Abuja became the capital of Nigeria in 1991, replacing Lagos."
-  },
-  {
-    question: "Which organ pumps blood throughout the body?",
-    options: ["Liver", "Heart", "Brain", "Lung"],
-    answer: "Heart",
-    explanation: "The heart pumps blood throughout the body via the circulatory system."
-  },
-  {
-    question: "What is the chemical symbol for water?",
-    options: ["CO2", "H2O", "NaCl", "O2"],
-    answer: "H2O",
-    explanation: "H2O represents water, composed of two hydrogen atoms and one oxygen atom."
-  },
-  {
-    question: "Who wrote the novel 'Things Fall Apart'?",
-    options: ["Chinua Achebe", "Wole Soyinka", "Ngugi wa Thiong'o", "Chimamanda Ngozi Adichie"],
-    answer: "Chinua Achebe",
-    explanation: "'Things Fall Apart' was written by Chinua Achebe, a renowned Nigerian author."
-  },
-  {
-    question: "What gas do plants absorb from the atmosphere?",
-    options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
-    answer: "Carbon dioxide",
-    explanation: "Plants absorb carbon dioxide during photosynthesis to produce oxygen."
-  }
-];
-
-const main = document.getElementById('main');
-let currentSet = [];
-let currentIndex = 0;
-let mode = '';
-let selectedAnswers = [];
-let score = 0;
-let examTimer;
-
-document.getElementById('practiceBtn').addEventListener('click', startPractice);
-document.getElementById('examBtn').addEventListener('click', startExam);
-
-function startPractice() {
-  mode = 'practice';
-  currentIndex = 0;
-  score = 0;
-  selectedAnswers = [];
-  currentSet = shuffleArray(questions).slice(0, 25);
-  showQuestion();
-}
-
-function startExam() {
-  mode = 'exam';
-  currentIndex = 0;
-  score = 0;
-  selectedAnswers = [];
-  currentSet = shuffleArray(questions).slice(0, 30);
-  showQuestion();
-  examTimer = setTimeout(() => finishExam(), 45 * 60 * 1000);
-}
-
-function showQuestion() {
-  const q = currentSet[currentIndex];
-  main.innerHTML = `
-    <h2>Question ${currentIndex + 1} of ${currentSet.length}</h2>
-    <p>${q.question}</p>
-    <div class="options">
-      ${q.options
-        .map(
-          (opt) =>
-            `<button class="option-btn" onclick="submitAnswer('${opt}')">${opt}</button>`
-        )
-        .join('<br><br>')}
-    </div>
-  `;
-}
-
-function submitAnswer(selected) {
-  const correct = currentSet[currentIndex].answer;
-  if (mode === 'practice') {
-    const explanation = currentSet[currentIndex].explanation;
-    if (selected === correct) {
-      alert(`✅ Correct!\n\n${explanation}`);
-      score++;
-    } else {
-      alert(`❌ Wrong.\n\nCorrect Answer: ${correct}\nExplanation: ${explanation}`);
-    }
-    currentIndex++;
-    if (currentIndex < currentSet.length) {
-      showQuestion();
-    } else {
-      showPracticeResult();
-    }
-  } else {
-    // exam mode
-    selectedAnswers.push({ selected, correct });
-    currentIndex++;
-    if (currentIndex < currentSet.length) {
-      showQuestion();
-    } else {
-      finishExam();
-    }
-  }
-}
-
-function showPracticeResult() {
-  main.innerHTML = `
-    <h2>Practice Completed</h2>
-    <p>You answered ${score} out of ${currentSet.length} questions correctly.</p>
-    <button onclick="location.reload()">Go Back</button>
-  `;
-}
-
-function finishExam() {
-  clearTimeout(examTimer);
-  score = selectedAnswers.filter((a) => a.selected === a.correct).length;
-  const percent = score * 2;
-  let resultHTML = `
-    <h2>Exam Completed</h2>
-    <p>You answered ${currentSet.length} questions.</p>
-    <h3>Your Score: ${score} / ${currentSet.length} → ${percent}%</h3>
-    <h4>Review</h4>
-  `;
-
-  selectedAnswers.forEach((ans, i) => {
-    const q = currentSet[i];
-    resultHTML += `
-      <p><strong>Q${i + 1}: ${q.question}</strong><br/>
-      Your Answer: ${ans.selected}<br/>
-      Correct Answer: ${q.correct}<br/>
-      Explanation: ${q.explanation}</p><hr/>
-    `;
-  });
-
-  resultHTML += `<button onclick="location.reload()">Back to Home</button>`;
-  main.innerHTML = resultHTML;
-}
-
-// Helper: shuffle array
-function shuffleArray(array) {
-  return array
-    .map((a) => ({ sort: Math.random(), value: a }))
-    .sort((a, b) => a.sort - b.sort)
-    .map((a) => a.value);
-}
-</script>
+	<header>
+		<h1>DNST Post UTME</h1>
+		<p>Get ready to ace your Post UTME with DNST Premium Class!</p>
+	</header>
+	<main>
+		<div class="mode-selection">
+			<button class="practice-mode">Practice Mode</button>
+			<button class="exam-mode">Exam Mode</button>
+		</div>
+		<div class="practice-mode-content">
+			<!-- Practice mode questions and feedback will go here -->
+		</div>
+		<div class="exam-mode-content">
+			<!-- Exam mode questions and results will go here -->
+		</div>
+	</main>
+	<footer>
+		<a href="https://wa.me/2349156478004" target="_blank" style="background-color: #25D366; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+			<i class="fa fa-whatsapp"></i> Join DNST Premium Class!
+		</a>
+	</footer>
+	<script src="script.js"></script>
 </body>
 </html>

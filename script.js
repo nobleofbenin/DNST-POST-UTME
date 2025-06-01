@@ -1,139 +1,141 @@
 // script.js
 
-let currentQuestions = [];
-let currentQuestionIndex = 0;
+let currentQuestion = 0;
 let score = 0;
-let timer;
-let timeLeft = 3600; // 1 hour for Exam Mode
-
-const quizContainer = document.getElementById("quiz-container");
+let shuffledQuestions = [];
+let reviewMode = false;
+let reviewIndex = 0;
+let answers = [];
+let examTimer;
 
 function startPractice() {
-  currentQuestions = shuffleArray(questions).slice(0, 30);
-  currentQuestionIndex = 0;
+  shuffledQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 30);
+  currentQuestion = 0;
   score = 0;
-  renderPracticeQuestion();
+  answers = [];
+  reviewMode = false;
+  showQuestion();
+  updateProgress();
 }
 
 function startExam() {
-  currentQuestions = shuffleArray(questions).slice(0, 50);
-  currentQuestionIndex = 0;
+  shuffledQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 50);
+  currentQuestion = 0;
   score = 0;
-  timeLeft = 3600;
-  startTimer();
-  renderExamQuestion();
+  answers = [];
+  reviewMode = false;
+  showQuestion();
+  updateProgress();
+  startTimer(60 * 60);
 }
 
-function renderPracticeQuestion() {
-  const q = currentQuestions[currentQuestionIndex];
-  quizContainer.innerHTML = `
-    <h2>Question ${currentQuestionIndex + 1} of ${currentQuestions.length}</h2>
+function showQuestion() {
+  const q = shuffledQuestions[currentQuestion];
+  const container = document.getElementById("quiz-container");
+  const mode = reviewMode ? `<p><strong>Review Mode</strong></p>` : "";
+
+  container.innerHTML = `
+    ${mode}
+    <h2>Question ${currentQuestion + 1} of ${shuffledQuestions.length}</h2>
     <p>${q.question}</p>
-    <ul>
-      ${q.options
-        .map(
-          (opt, i) => `<li><button onclick="handlePracticeAnswer('${opt}')">${opt}</button></li>`
-        )
-        .join("")}
-    </ul>
-    <div id="explanation"></div>
-    <div>
-      <button onclick="prevPractice()" ${currentQuestionIndex === 0 ? "disabled" : ""}>Previous</button>
-      <button onclick="nextPractice()" ${currentQuestionIndex === currentQuestions.length - 1 ? "disabled" : ""}>Next</button>
+    ${q.options
+      .map(
+        (opt, i) => `
+      <button onclick="checkAnswer('${opt}')">${opt}</button>`
+      )
+      .join("")}
+    <div id="feedback"></div>
+    <div style="margin-top: 20px;">
+      ${currentQuestion > 0 ? `<button onclick="prevQuestion()">Previous</button>` : ""}
+      ${currentQuestion < shuffledQuestions.length - 1 ? `<button onclick="nextQuestion()">Next</button>` : "<button onclick='submitExam()'>Submit</button>"}
     </div>
+    <button onclick="goHome()" style="margin-top: 15px; background: red; color: white;">End / Go Back</button>
   `;
 }
 
-function handlePracticeAnswer(selected) {
-  const q = currentQuestions[currentQuestionIndex];
-  const expDiv = document.getElementById("explanation");
-  if (selected === q.answer) {
-    expDiv.innerHTML = `<p style='color:green'><strong>Correct!</strong><br>${q.explanation}</p>`;
+function checkAnswer(selected) {
+  const correct = shuffledQuestions[currentQuestion].answer;
+  const feedback = document.getElementById("feedback");
+
+  if (reviewMode) return;
+
+  if (selected === correct) {
+    score++;
+    feedback.innerHTML = `<p style='color:green'><strong>Correct!</strong></p>`;
   } else {
-    expDiv.innerHTML = `<p style='color:red'><strong>Wrong.</strong> Correct Answer: ${q.answer}<br>${q.explanation}</p>`;
+    feedback.innerHTML = `<p style='color:red'><strong>Wrong!</strong> Correct Answer: ${correct}</p>`;
+  }
+
+  answers[currentQuestion] = selected;
+}
+
+function nextQuestion() {
+  if (currentQuestion < shuffledQuestions.length - 1) {
+    currentQuestion++;
+    showQuestion();
+    updateProgress();
   }
 }
 
-function nextPractice() {
-  if (currentQuestionIndex < currentQuestions.length - 1) {
-    currentQuestionIndex++;
-    renderPracticeQuestion();
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+    updateProgress();
   }
 }
 
-function prevPractice() {
-  if (currentQuestionIndex > 0) {
-    currentQuestionIndex--;
-    renderPracticeQuestion();
-  }
-}
+function submitExam() {
+  clearInterval(examTimer);
+  const total = shuffledQuestions.length;
+  const percent = Math.round((score / total) * 100);
 
-function renderExamQuestion() {
-  const q = currentQuestions[currentQuestionIndex];
-  quizContainer.innerHTML = `
-    <h2>Exam Mode - Question ${currentQuestionIndex + 1} of ${currentQuestions.length}</h2>
-    <p>Time Left: <span id="timer"></span></p>
-    <p>${q.question}</p>
-    <ul>
-      ${q.options
-        .map(
-          (opt, i) => `<li><button onclick="handleExamAnswer('${opt}')">${opt}</button></li>`
-        )
-        .join("")}
-    </ul>
+  if (!reviewMode) {
+    const best = localStorage.getItem("bestScore") || 0;
+    if (percent > best) {
+      localStorage.setItem("bestScore", percent);
+    }
+  }
+
+  const container = document.getElementById("quiz-container");
+  container.innerHTML = `
+    <h2>Exam Completed</h2>
+    <p>Your score: ${score}/${total} (${percent}%)</p>
+    <p>Best score (this browser): ${localStorage.getItem("bestScore")}%</p>
+    <button onclick="startReview()">Review Answers</button>
+    <button onclick="goHome()">Back to Home</button>
   `;
-  updateTimerDisplay();
 }
 
-function handleExamAnswer(selected) {
-  const q = currentQuestions[currentQuestionIndex];
-  if (selected === q.answer) score++;
-  currentQuestionIndex++;
-  if (currentQuestionIndex < currentQuestions.length) {
-    renderExamQuestion();
-  } else {
-    clearInterval(timer);
-    showExamResults();
-  }
+function startReview() {
+  currentQuestion = 0;
+  reviewMode = true;
+  showQuestion();
 }
 
-function startTimer() {
-  timer = setInterval(() => {
+function updateProgress() {
+  const text = document.getElementById("progress-text");
+  const fill = document.getElementById("fill");
+  const total = shuffledQuestions.length;
+  const percent = Math.round(((currentQuestion + 1) / total) * 100);
+  text.textContent = `Progress: ${currentQuestion + 1} of ${total}`;
+  fill.style.width = `${percent}%`;
+}
+
+function goHome() {
+  document.getElementById("quiz-container").style.display = "none";
+  document.getElementById("home").style.display = "block";
+  document.getElementById("progress-bar").style.display = "none";
+  clearInterval(examTimer);
+}
+
+function startTimer(seconds) {
+  let timeLeft = seconds;
+  examTimer = setInterval(() => {
     timeLeft--;
-    updateTimerDisplay();
     if (timeLeft <= 0) {
-      clearInterval(timer);
-      showExamResults();
+      clearInterval(examTimer);
+      submitExam();
     }
   }, 1000);
-}
-
-function updateTimerDisplay() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  document.getElementById("timer").innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-}
-
-function showExamResults() {
-  quizContainer.innerHTML = `
-    <h2>Exam Completed</h2>
-    <p>Your Score: ${score} out of ${currentQuestions.length} (${(score * 2)}%)</p>
-    <h3>Review Questions:</h3>
-    <div>
-      ${currentQuestions
-        .map(
-          (q, i) => `
-        <div style="border:1px solid #ccc; padding:10px; margin:10px 0">
-          <p><strong>Q${i + 1}:</strong> ${q.question}</p>
-          <p><strong>Correct Answer:</strong> ${q.answer}</p>
-          <p><strong>Explanation:</strong> ${q.explanation}</p>
-        </div>`
-        )
-        .join("")}
-    </div>
-  `;
-}
-
-function shuffleArray(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
 }

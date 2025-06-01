@@ -3,7 +3,7 @@ const questions = [
     question: "What is the capital of Nigeria?",
     options: ["Abuja", "Lagos", "Kano", "Port Harcourt"],
     answer: "Abuja",
-    explanation: "Abuja became the capital of Nigeria in 1991, replacing Lagos."
+    explanation: "Abuja became the capital in 1991, replacing Lagos."
   },
   {
     question: "Who discovered gravity?",
@@ -11,5 +11,5 @@ const questions = [
     answer: "Isaac Newton",
     explanation: "Newton formulated the law of universal gravitation in the 17th century."
   },
-  // Add more questions like these...
+  // Add 30 to 50 real Post UTME questions here in the same format.
 ];

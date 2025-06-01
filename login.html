@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DNST Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { text-align: center; padding-top: 100px; background: #f1f8e9; }
+    input { padding: 10px; font-size: 1.1rem; width: 250px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 15px; padding: 10px 20px; font-size: 1.1rem; background: #2e7d32; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    h2 { color: #2e7d32; }
+  </style>
+</head>
+<body>
+  <h2>Welcome to DNST Online Post UTME</h2>
+  <p>Please enter your name to continue:</p>
+  <input type="text" id="studentName" placeholder="Your name" />
+  <br>
+  <button onclick="saveName()">Start</button>
+
+  <script>
+    function saveName() {
+      const name = document.getElementById('studentName').value.trim();
+      if (name.length < 2) {
+        alert('Please enter a valid name');
+        return;
+      }
+      localStorage.setItem('studentName', name);
+      window.location.href = 'index.html';
+    }
+
+    // Auto redirect if already logged in
+    if (localStorage.getItem('studentName')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

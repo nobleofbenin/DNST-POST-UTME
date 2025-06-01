@@ -5,7 +5,6 @@ let reviewMode = false;
 let answers = [];
 let examTimer;
 let examMode = false;
-const studentName = localStorage.getItem("studentName") || "Student";
 
 function startPractice() {
   examMode = false;
@@ -43,7 +42,7 @@ function showQuestion() {
     <div id="feedback"></div>
     <div style="margin-top: 20px;">
       ${currentQuestion > 0 ? `<button onclick="prevQuestion()">Previous</button>` : ""}
-      ${currentQuestion < shuffledQuestions.length - 1 ? `<button onclick="nextQuestion()">Next</button>` : `<button onclick='submitExam()'>Submit</button>`}
+      ${currentQuestion < shuffledQuestions.length - 1 ? `<button onclick="nextQuestion()">Next</button>` : `<button onclick="submitExam()">Submit</button>`}
     </div>
     <button onclick="goHome()" style="margin-top: 15px; background: red; color: white;">End / Go Back</button>
     ${examMode && !reviewMode ? `<p id='timer' style='margin-top:10px; font-weight:bold;'></p>` : ""}
@@ -92,19 +91,10 @@ function submitExam() {
   const total = shuffledQuestions.length;
   const percent = Math.round((score / total) * 100);
 
-  if (!reviewMode) {
-    const key = `bestScore_${studentName}`;
-    const best = localStorage.getItem(key) || 0;
-    if (percent > best) {
-      localStorage.setItem(key, percent);
-    }
-  }
-
   const container = document.getElementById("quiz-container");
   container.innerHTML = `
-    <h2>Well done, ${studentName}!</h2>
+    <h2>Well done!</h2>
     <p>Your score: ${score}/${total} (${percent}%)</p>
-    <p>Best score (on this device): ${localStorage.getItem(`bestScore_${studentName}`)}%</p>
     <button onclick="startReview()">Review Answers</button>
     <button onclick="goHome()">Back to Home</button>
   `;

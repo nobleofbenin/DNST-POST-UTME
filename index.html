@@ -3,44 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DNST Online Post UTME Class</title>
+  <title>DNST Post UTME Practice</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="logo.jpg" alt="DNST Logo" class="logo" />
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
+  <div id="home" style="text-align:center; padding:40px;">
+    <h1>Welcome to DNST Online Post UTME Practice</h1>
+    <p>Select a mode to begin your test preparation</p>
+    <button onclick="beginPractice()">Practice Mode</button>
+    <button onclick="beginExam()">Exam Mode</button>
+  </div>
 
-  <main>
-    <section class="hero">
-      <h1>Welcome to DNST Online Post UTME Class</h1>
-      <p>Get ready to ace your Post UTME with DNST Online Post UTME Class! Practice with confidence and precision.</p>
-      <button onclick="location.href='#mode-selection'">Start Practicing Now</button>
-    </section>
+  <div id="quiz-container" style="display:none; padding:20px;"></div>
 
-    <section id="mode-selection" class="mode-selection">
-      <h2>Select Mode</h2>
-      <p>To join our WhatsApp Post UTME class, click the WhatsApp icon below and say: <strong>"Hello, I want to join the DNST Post UTME class."</strong></p>
-      <div class="modes">
-        <button id="practiceBtn">Practice Mode</button>
-        <button id="examBtn">Exam Mode</button>
-      </div>
-    </section>
-
-    <section id="quiz-container" class="hidden"></section>
-  </main>
-
-  <a href="https://wa.me/2349156478004" class="whatsapp-icon" target="_blank" title="Join DNST on WhatsApp">
-    <img src="https://img.icons8.com/ios-filled/50/25D366/whatsapp.png" alt="WhatsApp" />
-  <script src="questions.js"></script>
-<script src="script.js"></script>
-  </a>
   <script src="questions.js"></script>
   <script src="script.js"></script>
+  <script>
+    function beginPractice() {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      startPractice();
+    }
+
+    function beginExam() {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      startExam();
+    }
+  </script>
 </body>
 </html>

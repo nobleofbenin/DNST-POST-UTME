@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DNST Post UTME Practice</title>
   <link rel="stylesheet" href="style.css" />
- <head>
-  ...
-  <link rel="stylesheet" href="style.css" />
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VVXHPQ6QNH"></script>
@@ -18,11 +15,10 @@
     gtag('config', 'G-VVXHPQ6QNH');
   </script>
 </head>
-
-</head>
 <body>
   <div id="home" class="home-section">
     <h1>Welcome to DNST Online Post UTME Practice</h1>
+    <p id="welcomeName"></p>
     <p>Select a mode to begin your test preparation</p>
     <button onclick="beginPractice()">Start Practice Mode</button>
     <button onclick="beginExam()">Start Exam Mode</button>
@@ -46,6 +42,10 @@
   <script src="questions.js"></script>
   <script src="script.js"></script>
   <script>
+    const studentName = localStorage.getItem("studentName");
+    if (!studentName) window.location.href = "login.html";
+    document.getElementById("welcomeName").textContent = `Welcome, ${studentName}`;
+
     function beginPractice() {
       document.getElementById("home").style.display = "none";
       document.getElementById("quiz-container").style.display = "block";

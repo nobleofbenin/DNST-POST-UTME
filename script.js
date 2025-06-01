@@ -5,6 +5,7 @@ let reviewMode = false;
 let answers = [];
 let examTimer;
 let examMode = false;
+let timeLeft = 0; // Keep time globally
 
 function startPractice() {
   examMode = false;
@@ -24,9 +25,10 @@ function startExam() {
   score = 0;
   answers = [];
   reviewMode = false;
+  timeLeft = 60 * 60; // 1 hour
   showQuestion();
   updateProgress();
-  startTimer(60 * 60); // 1 hour = 3600 seconds
+  startTimer();
 }
 
 function showQuestion() {
@@ -34,12 +36,21 @@ function showQuestion() {
   const container = document.getElementById("quiz-container");
   const mode = reviewMode ? `<p><strong>Review Mode</strong></p>` : "";
 
+  let feedback = "";
+  if (reviewMode) {
+    feedback = `
+      <div style="margin-top:10px;">
+        <p><strong>Correct Answer:</strong> ${q.answer}</p>
+        <p><strong>Explanation:</strong> ${q.explanation || "No explanation provided."}</p>
+      </div>`;
+  }
+
   container.innerHTML = `
     ${mode}
     <h2>Question ${currentQuestion + 1} of ${shuffledQuestions.length}</h2>
     <p>${q.question}</p>
-    ${q.options.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join("")}
-    <div id="feedback"></div>
+    ${q.options.map(opt => `<button onclick="checkAnswer('${opt}')" class="${answers[currentQuestion] === opt ? 'selected-option' : ''}">${opt}</button>`).join("")}
+    <div id="feedback">${feedback}</div>
     <div style="margin-top: 20px;">
       ${currentQuestion > 0 ? `<button onclick="prevQuestion()">Previous</button>` : ""}
       ${currentQuestion < shuffledQuestions.length - 1 ? `<button onclick="nextQuestion()">Next</button>` : `<button onclick="submitExam()">Submit</button>`}
@@ -48,11 +59,21 @@ function showQuestion() {
     ${examMode && !reviewMode ? `<p id='timer' style='margin-top:10px; font-weight:bold;'></p>` : ""}
   `;
 
-  if (examMode && !reviewMode) updateTimerDisplay();
+  updateTimerDisplay(); // This just updates display, doesn't reset time
 }
 
 function checkAnswer(selected) {
   if (reviewMode) return;
+
+  // Highlight selected
+  const buttons = document.querySelectorAll("#quiz-container button");
+  buttons.forEach(btn => {
+    if (btn.textContent === selected) {
+      btn.classList.add("selected-option");
+    } else if (!btn.classList.contains("nav-button")) {
+      btn.classList.remove("selected-option");
+    }
+  });
 
   const correct = shuffledQuestions[currentQuestion].answer;
   if (!examMode) {
@@ -122,11 +143,10 @@ function goHome() {
   clearInterval(examTimer);
 }
 
-function startTimer(seconds) {
-  let timeLeft = seconds;
+function startTimer() {
   examTimer = setInterval(() => {
     timeLeft--;
-    updateTimerDisplay(timeLeft);
+    updateTimerDisplay();
     if (timeLeft <= 0) {
       clearInterval(examTimer);
       submitExam();
@@ -134,7 +154,7 @@ function startTimer(seconds) {
   }, 1000);
 }
 
-function updateTimerDisplay(timeLeft = 0) {
+function updateTimerDisplay() {
   const timerEl = document.getElementById("timer");
   if (!timerEl) return;
   const mins = Math.floor(timeLeft / 60);

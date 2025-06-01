@@ -1,119 +1,80 @@
 body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
-  background: #ffffff;
-  color: #333;
+  padding: 0;
+  background: #f8fff8;
+  color: #222;
 }
 
 header {
+  background-color: #008000;
+  color: white;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #2a8a2a;
-  padding: 10px 20px;
 }
 
 .logo {
-  height: 60px;
+  height: 50px;
 }
 
 nav a {
   color: white;
-  margin: 0 10px;
+  margin-left: 15px;
   text-decoration: none;
   font-weight: bold;
 }
 
 .hero {
-  background: linear-gradient(to right, #2a8a2a, #f4d600);
-  color: white;
   text-align: center;
-  padding: 60px 20px;
+  padding: 3rem 1rem;
+  background-color: #e9ffe9;
 }
 
 .hero h1 {
-  font-size: 2em;
+  color: #004400;
 }
 
-.cta-button {
-  background: white;
-  color: green;
-  padding: 10px 20px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.features {
-  padding: 30px 20px;
-  background: #f8f8f8;
-}
-
-.features h2 {
-  color: #2a8a2a;
-}
-
-footer {
-  text-align: center;
-  padding: 10px;
-  background: #2a8a2a;
+.hero button {
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #25D366;
   color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-.quiz-container {
-  padding: 20px;
+.mode-selection {
   text-align: center;
+  margin-top: 2rem;
 }
 
-button {
+.modes button {
   margin: 10px;
-  padding: 10px 20px;
-  background: green;
-  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background-color: #FFD700;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
+}
+
+.whatsapp-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 50px;
+  width: 50px;
+  z-index: 1000;
+}
+
+#quiz-container {
+  margin: 2rem;
 }
 
 .hidden {
   display: none;
 }
-
-#question-container {
-  margin-top: 20px;
-  font-size: 1.2em;
-}
-
-.whatsapp-icon {
-  font-size: 24px;
-  margin-left: 10px;
-  text-decoration: none;
-}
-
-#feedback {
-  margin-top: 10px;
-  font-weight: bold;
-  color: blue;
-}
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 100;
-  border-radius: 50%;
-}
-.back-button {
-  background-color: #f0ad4e;
-  color: white;
-  padding: 10px 15px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.back-button:hover {
-  background-color: #ec971f;
-}
-

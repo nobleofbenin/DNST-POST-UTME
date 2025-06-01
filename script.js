@@ -7,6 +7,7 @@ let reviewMode = false;
 let reviewIndex = 0;
 let answers = [];
 let examTimer;
+const studentName = localStorage.getItem("studentName") || "Student";
 
 function startPractice() {
   shuffledQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 30);
@@ -39,15 +40,16 @@ function showQuestion() {
     <h2>Question ${currentQuestion + 1} of ${shuffledQuestions.length}</h2>
     <p>${q.question}</p>
     ${q.options
-      .map(
-        (opt, i) => `
-      <button onclick="checkAnswer('${opt}')">${opt}</button>`
-      )
+      .map((opt) => `<button onclick="checkAnswer('${opt}')">${opt}</button>`)
       .join("")}
     <div id="feedback"></div>
     <div style="margin-top: 20px;">
       ${currentQuestion > 0 ? `<button onclick="prevQuestion()">Previous</button>` : ""}
-      ${currentQuestion < shuffledQuestions.length - 1 ? `<button onclick="nextQuestion()">Next</button>` : "<button onclick='submitExam()'>Submit</button>"}
+      ${
+        currentQuestion < shuffledQuestions.length - 1
+          ? `<button onclick="nextQuestion()">Next</button>`
+          : `<button onclick='submitExam()'>Submit</button>`
+      }
     </div>
     <button onclick="goHome()" style="margin-top: 15px; background: red; color: white;">End / Go Back</button>
   `;
@@ -91,17 +93,18 @@ function submitExam() {
   const percent = Math.round((score / total) * 100);
 
   if (!reviewMode) {
-    const best = localStorage.getItem("bestScore") || 0;
+    const key = `bestScore_${studentName}`;
+    const best = localStorage.getItem(key) || 0;
     if (percent > best) {
-      localStorage.setItem("bestScore", percent);
+      localStorage.setItem(key, percent);
     }
   }
 
   const container = document.getElementById("quiz-container");
   container.innerHTML = `
-    <h2>Exam Completed</h2>
+    <h2>Well done, ${studentName}!</h2>
     <p>Your score: ${score}/${total} (${percent}%)</p>
-    <p>Best score (this browser): ${localStorage.getItem("bestScore")}%</p>
+    <p>Best score (on this device): ${localStorage.getItem(`bestScore_${studentName}`)}%</p>
     <button onclick="startReview()">Review Answers</button>
     <button onclick="goHome()">Back to Home</button>
   `;

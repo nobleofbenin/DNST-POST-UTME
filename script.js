@@ -1,177 +1,131 @@
+const quizContainer = document.getElementById("quiz-container");
 const practiceBtn = document.getElementById("practiceBtn");
 const examBtn = document.getElementById("examBtn");
-const container = document.getElementById("quizContainer");
 
-let currentQuestionIndex = 0;
-let selectedAnswers = [];
-let score = 0;
-let timerInterval;
-
-practiceBtn.addEventListener("click", () => {
-  loadPracticeMode();
-});
-
-examBtn.addEventListener("click", () => {
-  loadExamMode();
-});
-
-// Shuffle and select random questions
-function getRandomQuestions(count) {
-  const shuffled = questions.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
-// PRACTICE MODE
-function loadPracticeMode() {
-  container.innerHTML = "";
-  const practiceQuestions = getRandomQuestions(30);
-  currentQuestionIndex = 0;
+function showQuiz(questions, mode) {
+  quizContainer.innerHTML = "";
+  quizContainer.classList.remove("hidden");
 
-  const questionDiv = document.createElement("div");
-  const feedbackDiv = document.createElement("div");
-  const explanationDiv = document.createElement("div");
-  const navDiv = document.createElement("div");
+  let current = 0;
+  let score = 0;
+  let userAnswers = [];
 
-  const nextBtn = document.createElement("button");
-  const prevBtn = document.createElement("button");
-  const backBtn = document.createElement("button");
+  const endButton = document.createElement("button");
+  endButton.textContent = "Back to Mode Selection";
+  endButton.onclick = () => {
+    quizContainer.classList.add("hidden");
+  };
+  quizContainer.appendChild(endButton);
 
-  nextBtn.textContent = "Next";
-  prevBtn.textContent = "Previous";
-  backBtn.textContent = "Back to Main Page";
+  if (mode === "exam") {
+    let timer = 60 * 60;
+    const timerEl = document.createElement("p");
+    const updateTimer = () => {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+      timerEl.textContent = `Time Left: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+      if (timer > 0) {
+        timer--;
+        setTimeout(updateTimer, 1000);
+      } else {
+        showResults();
+      }
+    };
+    quizContainer.appendChild(timerEl);
+    updateTimer();
+  }
 
-  nextBtn.onclick = () => showPracticeQuestion(currentQuestionIndex + 1);
-  prevBtn.onclick = () => showPracticeQuestion(currentQuestionIndex - 1);
-  backBtn.onclick = () => location.reload();
+  const shuffled = shuffle(questions).slice(0, mode === "exam" ? 50 : 30);
+  showQuestion();
 
-  navDiv.appendChild(prevBtn);
-  navDiv.appendChild(nextBtn);
-  navDiv.appendChild(backBtn);
-  container.appendChild(questionDiv);
-  container.appendChild(feedbackDiv);
-  container.appendChild(explanationDiv);
-  container.appendChild(navDiv);
+  function showQuestion() {
+    quizContainer.innerHTML = "";
+    quizContainer.appendChild(endButton);
 
-  function showPracticeQuestion(index) {
-    if (index < 0 || index >= practiceQuestions.length) return;
-
-    currentQuestionIndex = index;
-    const q = practiceQuestions[index];
-    questionDiv.innerHTML = `<h3>Question ${index + 1} of ${practiceQuestions.length}</h3><p>${q.question}</p>`;
-    feedbackDiv.innerHTML = "";
-    explanationDiv.innerHTML = "";
-
-    q.options.forEach((opt, i) => {
+    const q = shuffled[current];
+    const qEl = document.createElement("div");
+    qEl.innerHTML = `<h3>Q${current + 1}: ${q.question}</h3>`;
+    q.options.forEach(opt => {
       const btn = document.createElement("button");
       btn.textContent = opt;
       btn.onclick = () => {
-        if (opt === q.answer) {
-          feedbackDiv.innerHTML = "<p style='color:green;'>Correct!</p>";
-        } else {
-          feedbackDiv.innerHTML = `<p style='color:red;'>Wrong. Correct answer: ${q.answer}</p>`;
+        if (mode === "practice") {
+          const feedback = document.createElement("p");
+          if (opt === q.answer) {
+            feedback.textContent = "✅ Correct!";
+          } else {
+            feedback.textContent = `❌ Incorrect. Correct: ${q.answer}`;
+          }
+          const explanation = document.createElement("p");
+          explanation.textContent = `Explanation: ${q.explanation}`;
+          quizContainer.appendChild(feedback);
+          quizContainer.appendChild(explanation);
         }
-        explanationDiv.innerHTML = `<p><strong>Explanation:</strong> ${q.explanation}</p>`;
-      };
-      questionDiv.appendChild(btn);
-    });
-  }
-
-  showPracticeQuestion(0);
-}
-
-// EXAM MODE
-function loadExamMode() {
-  container.innerHTML = "";
-  const examQuestions = getRandomQuestions(50);
-  selectedAnswers = Array(50).fill(null);
-  score = 0;
-  currentQuestionIndex = 0;
-
-  const questionDiv = document.createElement("div");
-  const optionsDiv = document.createElement("div");
-  const submitBtn = document.createElement("button");
-  const timerDiv = document.createElement("div");
-  const backBtn = document.createElement("button");
-
-  submitBtn.textContent = "Submit Exam";
-  backBtn.textContent = "Back to Main Page";
-
-  submitBtn.onclick = () => finishExam();
-  backBtn.onclick = () => location.reload();
-
-  container.appendChild(timerDiv);
-  container.appendChild(questionDiv);
-  container.appendChild(optionsDiv);
-  container.appendChild(submitBtn);
-  container.appendChild(backBtn);
-
-  function showExamQuestion(index) {
-    currentQuestionIndex = index;
-    const q = examQuestions[index];
-    questionDiv.innerHTML = `<h3>Question ${index + 1} of 50</h3><p>${q.question}</p>`;
-    optionsDiv.innerHTML = "";
-
-    q.options.forEach((opt, i) => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.onclick = () => {
-        selectedAnswers[index] = opt;
-        if (index < 49) {
-          showExamQuestion(index + 1);
+        userAnswers[current] = opt;
+        if (mode === "practice") {
+          nextButton.disabled = false;
         }
       };
-      optionsDiv.appendChild(btn);
+      qEl.appendChild(btn);
     });
+
+    quizContainer.appendChild(qEl);
+
+    const nav = document.createElement("div");
+    const nextButton = document.createElement("button");
+    const prevButton = document.createElement("button");
+    prevButton.textContent = "Previous";
+    nextButton.textContent = current === shuffled.length - 1 ? "Submit" : "Next";
+
+    prevButton.onclick = () => {
+      if (current > 0) {
+        current--;
+        showQuestion();
+      }
+    };
+
+    nextButton.onclick = () => {
+      if (current < shuffled.length - 1) {
+        current++;
+        showQuestion();
+      } else {
+        showResults();
+      }
+    };
+
+    nav.appendChild(prevButton);
+    nav.appendChild(nextButton);
+    quizContainer.appendChild(nav);
   }
 
-  function finishExam() {
-    clearInterval(timerInterval);
-    container.innerHTML = "";
-    let resultsHTML = "";
-    score = 0;
-
-    examQuestions.forEach((q, i) => {
-      const userAnswer = selectedAnswers[i];
+  function showResults() {
+    quizContainer.innerHTML = "<h2>Results</h2>";
+    let correct = 0;
+    shuffled.forEach((q, i) => {
+      const userAnswer = userAnswers[i] || "No answer";
       const isCorrect = userAnswer === q.answer;
-      if (isCorrect) score++;
-
-      resultsHTML += `
-        <div style="border-bottom:1px solid #ccc; padding:10px;">
-          <p><strong>Q${i + 1}:</strong> ${q.question}</p>
-          <p>Your answer: <span style="color:${isCorrect ? 'green' : 'red'};">${userAnswer || 'No answer'}</span></p>
-          <p>Correct answer: <strong>${q.answer}</strong></p>
-          <p><em>Explanation:</em> ${q.explanation}</p>
-        </div>
+      if (isCorrect) correct++;
+      const result = document.createElement("div");
+      result.innerHTML = `
+        <p><strong>Q${i + 1}: ${q.question}</strong></p>
+        <p>Your answer: ${userAnswer} ${isCorrect ? "✅" : "❌"}</p>
+        <p>Correct answer: ${q.answer}</p>
+        <p><em>Explanation: ${q.explanation}</em></p>
+        <hr/>
       `;
+      quizContainer.appendChild(result);
     });
-
-    const finalScore = (score / 50) * 100;
-    container.innerHTML = `<h2>Exam Finished</h2><p>Your Score: ${finalScore}% (${score} out of 50)</p>` + resultsHTML;
-
-    const backBtn = document.createElement("button");
-    backBtn.textContent = "Back to Main Page";
-    backBtn.className = "back-button";
-    backBtn.onclick = () => location.reload();
-    container.appendChild(backBtn);
+    const scoreDisplay = document.createElement("h3");
+    scoreDisplay.textContent = `Score: ${((correct / shuffled.length) * 100).toFixed(2)}%`;
+    quizContainer.prepend(scoreDisplay);
+    quizContainer.appendChild(endButton);
   }
-
-  showExamQuestion(0);
-  startTimer(60 * 60, timerDiv); // 1 hour
 }
 
-// TIMER
-function startTimer(duration, display) {
-  let timer = duration, minutes, seconds;
-  timerInterval = setInterval(() => {
-    minutes = Math.floor(timer / 60);
-    seconds = timer % 60;
-
-    display.textContent = `Time Left: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-
-    if (--timer < 0) {
-      clearInterval(timerInterval);
-      alert("Time is up! Submitting your exam.");
-      finishExam();
-    }
-  }, 1000);
-}
+practiceBtn.onclick = () => showQuiz(questions, "practice");
+examBtn.onclick = () => showQuiz(questions, "exam");
+v

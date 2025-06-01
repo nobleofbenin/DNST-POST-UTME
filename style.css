@@ -2,79 +2,94 @@ body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
-  background: #f8fff8;
-  color: #222;
+  background: #f9f9f9;
+  color: #333;
 }
 
-header {
-  background-color: #008000;
-  color: white;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  height: 50px;
-}
-
-nav a {
-  color: white;
-  margin-left: 15px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.hero {
+.home-section {
+  padding: 40px 20px;
   text-align: center;
-  padding: 3rem 1rem;
-  background-color: #e9ffe9;
-}
-
-.hero h1 {
-  color: #004400;
-}
-
-.hero button {
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  background-color: #25D366;
+  background: linear-gradient(to right, #2e7d32, #aeea00);
   color: white;
-  border: none;
-  border-radius: 10px;
+}
+
+button {
+  padding: 12px 24px;
   font-size: 1rem;
-  cursor: pointer;
-}
-
-.mode-selection {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.modes button {
+  font-weight: bold;
   margin: 10px;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  background-color: #FFD700;
-  border: none;
   border-radius: 8px;
+  border: 2px solid #2e7d32;
+  background-color: #fff;
+  color: #2e7d32;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.whatsapp-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  height: 50px;
-  width: 50px;
-  z-index: 1000;
+button:hover {
+  background-color: #2e7d32;
+  color: #fff;
 }
 
 #quiz-container {
-  margin: 2rem;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
-.hidden {
-  display: none;
+/* WhatsApp Message + Icon */
+#whatsapp-note {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #2e7d32;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+#whatsapp-float a {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  padding: 14px 16px;
+  border-radius: 50%;
+  font-size: 24px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  z-index: 1001;
+}
+
+/* Progress Bar */
+#progress-bar {
+  max-width: 800px;
+  margin: 10px auto;
+  padding: 0 20px;
+}
+
+#progress-text {
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: block;
+}
+
+#bar {
+  background: #ccc;
+  height: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#fill {
+  height: 100%;
+  width: 0%;
+  background: #2e7d32;
+  transition: width 0.3s ease;
 }
